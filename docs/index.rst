@@ -24,7 +24,11 @@ Wiring
 .. A line break to separate badges from description.
 |
 
-**Wiring is a component management framework for Python.**
+**Wiring is a component management framework for Python** featuring:
+
+* dependency injection
+* interface definition and validation
+* modular and declarative component configuration approach
 
 This documentation is for Wiring version |release|. Wiring's versioning scheme
 fully complies with `Semantic Versioning 2.0`_ specification.
@@ -37,6 +41,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   rationale
    license
    glossary
    api
