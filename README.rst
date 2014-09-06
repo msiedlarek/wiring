@@ -49,8 +49,8 @@ To generate html documentation::
 To release::
 
    python setup.py register
-   python setup.py sdist upload
-   python setup.py bdist_wheel upload
+   python setup.py sdist upload -s -i gpgkey@example.com
+   python setup.py bdist_wheel upload -s -i gpgkey@example.com
 
 License
 =======
