@@ -13,6 +13,10 @@ Wiring
    :target: https://travis-ci.org/msiedlarek/wiring
    :alt: Last Build
 
+.. image:: http://img.shields.io/coveralls/msiedlarek/wiring.svg?style=flat
+   :target: https://coveralls.io/r/msiedlarek/wiring
+   :alt: Test Coverage
+
 .. image:: https://readthedocs.org/projects/wiring/badge/?style=flat
    :target: http://wiring.readthedocs.org
    :alt: Documentation
