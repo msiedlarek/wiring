@@ -22,10 +22,6 @@ You can install package for development and testing with::
    pip install sphinx tox flake8 wheel sphinx_rtd_theme
    pip install -e .
 
-To validate PEP8 compliance and run code static checking::
-
-   flake8 wiring
-
 To run the test suite on supported Python versions use::
 
    tox
@@ -33,6 +29,10 @@ To run the test suite on supported Python versions use::
 Or on a single version::
 
    tox -e py27
+
+To validate PEP8 compliance and run code static checking::
+
+   tox -e flake8
 
 To generate test coverage report::
 
