@@ -35,16 +35,13 @@ There's a little amount of solid tools to tackle big Python applications
 infrastructure problem:
 
 * `zope.component`_, while having some truly brilliant ideas, does not provide
-  Inversion of Control and above all is **a complete utter mess**. Its code is
+  dependency injection and above all is **a complete utter mess**. Its code is
   a mess and its documentation is a mess. If you don't believe me, just go and
   look at it.
 * `pinject`_ is not very flexible and relies on class and argument names to do
   the injection, which is very limiting. Also its latest commit while I'm
   writing this is over a year old, while there are several issues open.
-* `injector`_ while quite good is just not flexible enough for me.
-
-Those are the basic reasons why I decided to come up with my own
-implementation.
+* `injector`_ while quite good is just not flexible enough for my tastes.
 
 .. _Inversion of Control: http://www.martinfowler.com/articles/injection.html
 .. _zope.component: https://pypi.python.org/pypi/zope.component
