@@ -21,7 +21,7 @@ Wiring
 Quick Peek
 ==========
 
-::
+.. code-block:: python
 
    from wiring.graph import Graph
    from wiring.configuration import Module, provides, scope
