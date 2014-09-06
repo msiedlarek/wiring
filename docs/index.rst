@@ -35,6 +35,51 @@ fully complies with `Semantic Versioning 2.0`_ specification.
 
 .. _Semantic Versioning 2.0: http://semver.org/spec/v2.0.0.html
 
+Quick Peek
+----------
+
+::
+
+   from wiring.graph import Graph
+   from wiring.configuration import Module, provides, scope
+   from wiring.scopes import ThreadScope
+   from wiring.dependency import inject, injected
+   from wiring.interface import interface, implements
+
+   class DatabaseModule(Module):
+      @provides('db_connection')
+      @scope(ThreadScope)
+      def provide_db_connection(self, database_url=injected('database_url')):
+         return db_engine.connect(database_url)
+
+   class IUserManager(Interface):
+      def get(id):
+         """Get user by ID."""
+
+   @implements(IUserManager)
+   class DefaultUserManager(object):
+
+      @inject('db_connection')
+      def __init__(self, db_connection):
+         self.db = db_connection
+
+      def get(self, id):
+         self.db.sql('SELECT * FROM users WHERE id = :id', id=id)
+
+   class UserModule(Module):
+      factories = {
+         IUserManager: DefaultUserManager,
+      }
+
+   graph = Graph()
+   DatabaseModule().add_to(graph)
+   UserModule().add_to(graph)
+   graph.register_instance('database_url', 'sqlite://some.db')
+   graph.validate()
+
+   user_manager = graph.get(IUserManager)
+   user = user_manager.get(12)
+
 Contents
 --------
 
