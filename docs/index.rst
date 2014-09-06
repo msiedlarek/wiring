@@ -28,7 +28,7 @@ Wiring
 
 * dependency injection
 * interface definition and validation
-* modular and declarative component configuration approach
+* modular and declarative component configuration
 
 This documentation is for Wiring version |release|. Wiring's versioning scheme
 fully complies with `Semantic Versioning 2.0`_ specification.
