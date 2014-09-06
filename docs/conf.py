@@ -21,6 +21,9 @@ import os
 here = os.path.dirname(__file__)
 sys.path.insert(0, os.path.abspath(os.path.join(here, '..')))
 
+# on_rtd is whether the docs are being built on readthedocs.org
+on_rtd = (os.environ.get('READTHEDOCS', None) == 'True')
+
 import wiring
 
 # -- General configuration ------------------------------------------------
@@ -105,7 +108,8 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'nature'
+if not on_rtd:
+    html_theme = 'nature'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
