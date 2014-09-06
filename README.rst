@@ -7,6 +7,8 @@ Wiring
    :target: https://pypi.python.org/pypi/wiring/
 .. image:: http://img.shields.io/travis/msiedlarek/wiring.svg?style=flat
    :target: https://travis-ci.org/msiedlarek/wiring
+.. image:: https://readthedocs.org/projects/wiring/badge/?style=flat
+   :target: http://wiring.readthedocs.org
 
 **Wiring is a component management framework for Python.**
 

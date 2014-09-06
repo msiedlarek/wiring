@@ -13,6 +13,10 @@ Wiring
    :target: https://travis-ci.org/msiedlarek/wiring
    :alt: Last Build
 
+.. image:: https://readthedocs.org/projects/wiring/badge/?style=flat
+   :target: http://wiring.readthedocs.org
+   :alt: Documentation
+
 .. A line break to separate badges from description.
 |
 
