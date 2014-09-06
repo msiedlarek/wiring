@@ -1,16 +1,11 @@
 Wiring
 ******
 
-.. image:: https://pypip.in/version/wiring/badge.svg?style=flat
+.. image:: http://img.shields.io/pypi/v/wiring?style=flat
    :target: https://pypi.python.org/pypi/wiring/
-.. image:: https://pypip.in/status/wiring/badge.svg?style=flat
+.. image:: http://img.shields.io/pypi/l/wiring?style=flat
    :target: https://pypi.python.org/pypi/wiring/
-.. image:: https://pypip.in/py_versions/wiring/badge.svg?style=flat
-   :target: https://pypi.python.org/pypi/wiring/
-.. image:: https://pypip.in/license/wiring/badge.svg?style=flat
-   :target: https://pypi.python.org/pypi/wiring/
-
-.. image:: https://travis-ci.org/msiedlarek/wiring.svg
+.. image:: http://img.shields.io/travis/msiedlarek/wiring.svg?style=flat
    :target: https://travis-ci.org/msiedlarek/wiring
 
 **Wiring is a component management framework for Python.**

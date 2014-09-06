@@ -1,21 +1,17 @@
 Wiring
 ======
 
-.. image:: https://pypip.in/version/wiring/badge.svg?style=flat
+.. image:: http://img.shields.io/pypi/v/wiring?style=flat
    :target: https://pypi.python.org/pypi/wiring/
    :alt: Latest Version
 
-.. image:: https://pypip.in/status/wiring/badge.svg?style=flat
-   :target: https://pypi.python.org/pypi/wiring/
-   :alt: Development Status
-
-.. image:: https://pypip.in/py_versions/wiring/badge.svg?style=flat
-   :target: https://pypi.python.org/pypi/wiring/
-   :alt: Supported Python versions
-
-.. image:: https://pypip.in/license/wiring/badge.svg?style=flat
+.. image:: http://img.shields.io/pypi/l/wiring?style=flat
    :target: https://pypi.python.org/pypi/wiring/
    :alt: License
+
+.. image:: http://img.shields.io/travis/msiedlarek/wiring.svg?style=flat
+   :target: https://travis-ci.org/msiedlarek/wiring
+   :alt: Last Build
 
 .. A line break to separate badges from description.
 |
