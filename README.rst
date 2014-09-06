@@ -1,9 +1,9 @@
 Wiring
 ******
 
-.. image:: http://img.shields.io/pypi/v/wiring?style=flat
+.. image:: http://img.shields.io/pypi/v/wiring.svg?style=flat
    :target: https://pypi.python.org/pypi/wiring/
-.. image:: http://img.shields.io/pypi/l/wiring?style=flat
+.. image:: http://img.shields.io/pypi/l/wiring.svg?style=flat
    :target: https://pypi.python.org/pypi/wiring/
 .. image:: http://img.shields.io/travis/msiedlarek/wiring.svg?style=flat
    :target: https://travis-ci.org/msiedlarek/wiring
