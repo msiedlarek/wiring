@@ -22,6 +22,7 @@ Wiring
    :alt: Documentation
 
 .. A line break to separate badges from description.
+
 |
 
 **Wiring is a component management framework for Python** featuring:
