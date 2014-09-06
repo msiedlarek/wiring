@@ -17,6 +17,9 @@ Wiring
    :target: https://pypi.python.org/pypi/wiring/
    :alt: License
 
+.. A line break to separate badges from description.
+|
+
 **Wiring is a component management framework for Python.**
 
 This documentation is for Wiring version |release|. Wiring's versioning scheme

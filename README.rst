@@ -19,7 +19,7 @@ You can install package for development and testing with::
 
    virtualenv environment
    . environment/bin/activate
-   pip install sphinx tox flake8 wheel
+   pip install sphinx tox flake8 wheel sphinx_rtd_theme
    pip install -e .
 
 To validate PEP8 compliance and run code static checking::
