@@ -10,6 +10,9 @@ Wiring
 .. image:: https://pypip.in/license/wiring/badge.svg?style=flat
    :target: https://pypi.python.org/pypi/wiring/
 
+.. image:: https://travis-ci.org/msiedlarek/wiring.svg
+   :target: https://travis-ci.org/msiedlarek/wiring
+
 **Wiring is a component management framework for Python.**
 
 Development
