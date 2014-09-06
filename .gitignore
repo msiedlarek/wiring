@@ -1,0 +1,11 @@
+*.py[cod]
+__pycache__
+/*.egg
+/*.egg-info
+/.tox
+/.coverage
+/docs/_build
+/coverage
+/environment
+/dist
+/build
