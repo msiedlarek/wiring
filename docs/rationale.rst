@@ -107,8 +107,8 @@ split in three separate modules we'd have all of our previously mentioned
 problems solved:
 
 #. It's now loosely coupled. If you want to replace the security module, you
-   just need to reconfigure your object graph. `UserManager` doesn't even know
-   that `myapp.security` exists.
+   just need to reconfigure your :term:`object graph`. `UserManager` doesn't
+   even know that `myapp.security` exists.
 #. There are no global variables that are used between the modules - if you
    want to replace database connection for unit testing you just need to
    configure your object graph differently.
@@ -142,9 +142,6 @@ architecture problem:
 
 Interfaces
 ----------
-
-.. TODO(msiedlarek): mention problem when using injected('db_connection')
-   instead of injected(IDatabaseConnection).
 
 Many would argue that interfaces are useful only in languages like Java, where
 typing is static and multiple inheritance seriously limited. Those people view
@@ -183,3 +180,38 @@ available... I encourage you to look at just one file of Zope's implementation.
 Any file. Just one.
 
 .. _zope.interface: https://pypi.python.org/pypi/zope.interface
+
+Powers Combined
+---------------
+
+There is an important reason those two tools - dependency injection and
+interfaces - are coupled together into this package. Let's bring back
+a fragment of the dependency injection example::
+
+   class UserManager(object):
+      def __init__(self, db=injected('db_connection')):
+         self.db = db
+
+If a programmer is asked to change some behavior of `UserManager` and encouters
+this code, he has no way of knowing what exactly can it do with `db` variable.
+What are its methods and attributes?  He has to trace component configuration
+looking for specific implementation that is registered under ``db_connection``.
+Fortunately, there's a better way::
+
+   class IDatabaseConnection(object):
+
+      version = """Version of the used database engine."""
+
+      def sql(query):
+         """Runs a given `query` and returns its result as a list of tuples."""
+
+   class UserManager(object):
+      def __init__(self, db=injected(IDatabaseConnection)):
+         self.db = db
+
+Interfaces make perfect :term:`specifications <specification>` for dependency
+injection. Now anyone visiting `UserManager`'s code can easily trace what
+properties `db` variable will always have. Also, when replacing the database
+component its also obvious what properties new component should have to fit in
+place of the old one. It just have to conform to the `IDatabaseConnection`
+interface.
