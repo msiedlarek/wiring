@@ -6,8 +6,8 @@ Glossary
    dependency
       is a relation between two :term:`providers <provider>` when product of
       one provider is needed by the second provider. For example database
-      connection provider may need the result of a configuration provider, to
-      retrieve connection parameters.
+      connection provider may need the result from a configuration provider to
+      retrieve the connection parameters.
 
       Dependencies are declared using :term:`specifications <specification>`.
 
@@ -17,7 +17,7 @@ Glossary
       the provider is dependent on itself.
 
    interface
-      is a definition of an object describing attributes and methods an object
+      is a definition of an object, describing attributes and methods an object
       must have to conform to the interface. It is useful for testing whether
       some interchangable module can be used in a given context.
 
@@ -38,14 +38,13 @@ Glossary
       See :py:class:`wiring.graph.Graph`.
 
    provider
-      is a callable object implementing
-      :py:interface:`wiring.providers.IProvider` interface, that an
-      :term:`object graph` uses to retrieve objects for particular
-      :term:`specification`.
+      is a callable implementing :py:interface:`wiring.providers.IProvider`
+      interface, that the :term:`object graph` uses to retrieve objects for
+      particular :term:`specification`.
 
-      It contains declaration of dependencies that will be injected from the
-      object graph when the provider is called, and a type of the scope that
-      the graph will use to cache the result.
+      It declares dependencies that will be injected from the object graph when
+      the provider is called, and a type of the scope that the graph will use
+      to cache the result.
 
    scope
       is an object implementing :py:interface:`wiring.scopes.IScope` interface,
@@ -59,7 +58,7 @@ Glossary
 
    specification
       is a hashable object used as an unique identifier of some kind of object
-      in an :term:`object graph`. This identifier can be used to register
+      in the :term:`object graph`. This identifier can be used to register
       provider for that kind of object, declare the provider's dependencies on
       other kinds of objects and retrieve the object from the graph.
 

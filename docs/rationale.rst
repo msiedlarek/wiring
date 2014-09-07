@@ -1,38 +1,129 @@
 Rationale
 =========
 
-While I would discourage writing medium-to-big applications in Python (or any
-dynamically typed language for that matter), this just happens for whatever
-reason and you need to be prepared for when you encounter such application.
+While writing medium-to-large applications in Python (or any dynamically typed
+language for that matter) can be a very bad idea, this just happens, and quite
+often Python developer must deal with them. Sometimes the technology was chosen
+by the buzzword-driven management and sometimes the application is so old it
+doesn't even matter anymore.
 
-* If your object-oriented application exceeds 200k significant lines of Python
-  code and you feel that you may be in trouble...
-* If your simple Django app has turned into a horrific monstrocity maintained
-  by many people and deployed in many configurations...
-* If you're planning on doing something *big* in Python...
+Programming environments like Java, designed and used for years in enterprise
+settings have already developed tools to tackle architectural problems specific
+to big, object-oriented applications. Java language costructs like interfaces
+and frameworks like `Spring`_ or `Guice`_, while commonly ridiculed by Python
+community, can be in fact very useful in this context.
 
-...this may be the library for you.
+Wiring was created from the real need of a real application I've been working
+on and aims to solve its problems by adapting some of those proven ideas to the
+Python environment, while staying away from blindly copying APIs from other
+languages and libraries.
+
+.. _Spring: http://spring.io
+.. _Guice: https://github.com/google/guice
 
 Dependency Injection
 --------------------
 
-Most big, object-oriented applications could probably benefit from `Inversion
-of Control`_ pattern. For applications that need to have interchangable
-components - there's no *probably*. Dependency injection has some major
-benefits:
+`Inversion of Control`_ - commonly realized through dependency injection - is
+a popular pattern in object-oriented applications, allowing loose coupling
+while promoting object composition. Instead of getting its dependencies from
+some predefined location or creating them on the spot, an object can only
+declare what it needs and rely on external mechanism to provide it.
 
-* Loose coupling. Each component can be tested separately from others and
-  changed for another without any modification in dependent components.
-* Interchangeability. It's easy to change some aspect of a single
-  deployment without affecting others, as which component will be used is
-  a matter of configuration.
+For example, this is how an object **without** dependency injection could look
+like::
 
-Those are achieved by mentioned Inversion of Control - component no longer just
-*gets* what it needs - it *declares what it needs* and separate logic must
-provide it basing on some configuration.
+   from myapp.database import database_connection
+   from myapp.security import Encryptor
+
+   class UserManager(object):
+      def __init__(self):
+         self.db = database_connection
+         self.encryptor = Encryptor(algo='bcrypt')
+
+   class Application(object):
+      def __init__(self):
+         self.user_manager = UserManager()
+
+      def run(self):
+         pass
+
+   application = Application()
+   application.run()
+
+While many applications are built like that, this approach has some major
+drawbacks, which are becoming really visible while the application grows:
+
+#. Tight coupling. User management module is strongly connected with database
+   and security modules. If you'd like to replace the security module with some
+   other implementation, you'd need to also modify the user management module.
+
+#. It uses a global variable `database_connection`. This implies that whatever
+   context this class might be used in, the database connection is always the
+   same. If in future you'd want to use `UserManager` on some kind of archival
+   database, while the rest of your application simultaneously works on the
+   default database, you'd be in trouble. Also you need to replace a global
+   variable for unit testing.
+
+#. The `UserManager` creates its own `Encryptor` object. This means that if
+   you'd need to change password hashing algorithm for one deployment (for
+   example due to local government security restrictions), you'd have to modify
+   the `UserManager` to use some kind of global setting or provide the
+   algorithm as an argument with each use of the class.
+
+Those problems can be easily solved with dependency injection::
+
+   from wiring.dependency import injected
+   from wiring.graph import Graph
+   from myapp.database import database_connection
+   from myapp.security import Encryptor
+
+   class UserManager(object):
+      def __init__(self, db=injected('db_connection'),
+            encryptor=injected('password_encryptor')):
+         self.db = db
+         self.encryptor = encryptor
+
+   class Application(object):
+      def __init__(self, user_manager=injected('user_manager')):
+         self.user_manager = user_manager
+
+      def run(self):
+         pass
+
+   graph = Graph()
+   # Wiring has much more convenient methods of registering components. This is
+   # just for the clarity of the example.
+   graph.register_factory('user_manager', UserManager)
+   graph.register_factory('application', Application)
+   graph.register_instance('db_connection', database_connection)
+   graph.register_instance('password_encryptor', Encryptor(algo='bcrypt'))
+
+   application = graph.get('application')
+   application.run()
+
+This may look like a silly overheas when presented in one file, but if this was
+split in three separate modules we'd have all of our previously mentioned
+problems solved:
+
+#. It's now loosely coupled. If you want to replace the security module, you
+   just need to reconfigure your object graph. `UserManager` doesn't even know
+   that `myapp.security` exists.
+#. There are no global variables that are used between the modules - if you
+   want to replace database connection for unit testing you just need to
+   configure your object graph differently.
+#. You want to use different password hashing algorithm for one deployment? Not
+   a problem - you just configure your object graph differently on that
+   deployment. No need to search the code for every single use of `Encryptor`
+   class and really no need to modify security or user management modules at
+   all.
+
+Those benefits, while not that obvious in a small example, become pretty
+obvious in big applications - most importantly those with multiple, differing
+deployments.
 
 There's a little amount of solid tools to tackle big Python applications
-infrastructure problem:
+architecture problem:
 
 * `zope.component`_, while having some truly brilliant ideas, does not provide
   dependency injection and above all is **a complete utter mess**. Its code is
@@ -41,7 +132,8 @@ infrastructure problem:
 * `pinject`_ is not very flexible and relies on class and argument names to do
   the injection, which is very limiting. Also its latest commit while I'm
   writing this is over a year old, while there are several issues open.
-* `injector`_ while quite good is just not flexible enough for my tastes.
+* `injector`_ while quite good, also lacks flexibility and leaves out many
+  possibilities.
 
 .. _Inversion of Control: http://www.martinfowler.com/articles/injection.html
 .. _zope.component: https://pypi.python.org/pypi/zope.component
@@ -50,6 +142,9 @@ infrastructure problem:
 
 Interfaces
 ----------
+
+.. TODO(msiedlarek): mention problem when using injected('db_connection')
+   instead of injected(IDatabaseConnection).
 
 Many would argue that interfaces are useful only in languages like Java, where
 typing is static and multiple inheritance seriously limited. Those people view
