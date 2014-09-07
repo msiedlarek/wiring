@@ -25,11 +25,12 @@ Wiring
 
 |
 
-**Wiring is a component management framework for Python** featuring:
+**Wiring provides architectural foundation for Python applications**,
+featuring:
 
 * dependency injection
 * interface definition and validation
-* modular and declarative component configuration
+* modular component configuration
 
 This documentation is for Wiring version |release|. Wiring's versioning scheme
 fully complies with `Semantic Versioning 2.0`_ specification.

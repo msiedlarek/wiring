@@ -12,11 +12,12 @@ Wiring
 .. image:: https://readthedocs.org/projects/wiring/badge/?style=flat
    :target: http://wiring.readthedocs.org
 
-**Wiring is a component management framework for Python** featuring:
+**Wiring provides architectural foundation for Python applications**,
+featuring:
 
 * dependency injection
 * interface definition and validation
-* modular and declarative component configuration
+* modular component configuration
 
 Quick Peek
 ==========

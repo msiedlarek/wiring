@@ -14,7 +14,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as readme:
 setup(
     name=wiring.__title__,
     version=wiring.__version__,
-    description='Component management framework for Python.',
+    description='Architectural foundation for Python applications.',
     long_description=long_description,
     url='https://github.com/msiedlarek/wiring',
     author=wiring.__author__,
