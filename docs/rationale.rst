@@ -3,9 +3,7 @@ Rationale
 
 While writing medium-to-large applications in Python (or any dynamically typed
 language for that matter) can be a very bad idea, this just happens, and quite
-often Python developer must deal with them. Sometimes the technology was chosen
-by the buzzword-driven management and sometimes the application is so old it
-doesn't even matter anymore.
+often Python developer must deal with them.
 
 Programming environments like Java, designed and used for years in enterprise
 settings have already developed tools to tackle architectural problems specific
@@ -62,7 +60,7 @@ drawbacks, which are becoming really visible while the application grows:
    context this class might be used in, the database connection is always the
    same. If in future you'd want to use `UserManager` on some kind of archival
    database, while the rest of your application simultaneously works on the
-   default database, you'd be in trouble. Also you need to replace a global
+   default database, you'd be in trouble. Also you need to change a global
    variable for unit testing.
 
 #. The `UserManager` creates its own `Encryptor` object. This means that if
@@ -126,9 +124,8 @@ There's a little amount of solid tools to tackle big Python applications
 architecture problem:
 
 * `zope.component`_, while having some truly brilliant ideas, does not provide
-  dependency injection and above all is **a complete utter mess**. Its code is
-  a mess and its documentation is a mess. If you don't believe me, just go and
-  look at it.
+  dependency injection and above all its codebase and API are really old and
+  messy.
 * `pinject`_ is not very flexible and relies on class and argument names to do
   the injection, which is very limiting. Also its latest commit while I'm
   writing this is over a year old, while there are several issues open.
@@ -175,9 +172,8 @@ problems:
 * Any object can be tested against them and proved to have valid attributes and
   methods. This can be checked for example in unit tests.
 
-As to why create new interface implementation, when there is `zope.interface`_
-available... I encourage you to look at just one file of Zope's implementation.
-Any file. Just one.
+While there is `zope.interface`_ available it shares the problem of all Zope
+libraries - its codebase and API are both pretty old and messy.
 
 .. _zope.interface: https://pypi.python.org/pypi/zope.interface
 
