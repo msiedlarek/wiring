@@ -67,4 +67,3 @@ Glossary
          DBConnection
          (DBConnection, 'test_db')
          'database_url'
-
