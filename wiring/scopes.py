@@ -6,6 +6,7 @@ from wiring import interface
 
 __all__ = (
     'IScope',
+    'SingletonScope',
     'ProcessScope',
     'ThreadScope',
 )
