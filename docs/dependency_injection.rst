@@ -10,9 +10,9 @@ Object Graph
 ------------
 
 When you create an object-oriented program, you divide it into many enclosed
-parts called objects. This process is called encapsultation, and allows you to
+parts called objects. This process is called encapsulation, and allows you to
 clearly link the data and the logic that operates on them. However, all those
-sepatate objects still need to be able to collaborate to do your program's job
+separate objects still need to be able to collaborate to do your program's job
 - they need to have access to each other.
 
 These dependencies between objects can be represented by a directed acyclic
@@ -92,7 +92,7 @@ a function.
 :py:func:`@inject <wiring.dependency.inject>` decorator
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This is the simplest, and recommended one, but a little bit more verbose.
+This is the simplest and recommended method.
 
 .. code-block:: python
 
@@ -136,7 +136,7 @@ Example
 ^^^^^^^
 
 Let's use the :py:func:`@inject <wiring.dependency.inject>` decorator to
-annotate the code from out first example.
+annotate the code from the first example.
 
 .. code-block:: python
 
@@ -308,7 +308,7 @@ an :term:`object graph`. There are three basic scopes provided by Wiring.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Objects in this scope are cached forever. Only one instance of the object is
-created and reused though the program lifetime. Forked processes also use
+created and reused through the program lifetime. Forked processes also use
 a copy of cached instance.
 
 :py:class:`ProcessScope <wiring.scopes.ProcessScope>`
@@ -522,7 +522,7 @@ Factories as module methods
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There is just one little trick you can do with modules. Let's assume that you
-need to read the database URL from a file. you could create a separate function
+need to read the database URL from a file. You could create a separate function
 and register it as a `db.url` factory, but you can also put this logic right
 in your module.
 
@@ -571,7 +571,7 @@ This line (``graph.validate()``) will check our graph for
 :term:`dependency cycles <dependency cycle>` and missing dependencies,
 and raise an exception if any problem is found. This is an easy way to
 find out if we didn't miss something and `fail fast`_. It's a good practice
-to always do this after modyfying the graph and before its first use.
+to always do this after modifying the graph and before its first use.
 
 .. _fail fast: https://en.wikipedia.org/wiki/Fail-fast
 

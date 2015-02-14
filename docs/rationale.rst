@@ -7,7 +7,7 @@ often Python developer must deal with them.
 
 Programming environments like Java, designed and used for years in enterprise
 settings have already developed tools to tackle architectural problems specific
-to big, object-oriented applications. Java language costructs like interfaces
+to big, object-oriented applications. Java language constructs like interfaces
 and frameworks like `Spring`_ or `Guice`_, while commonly ridiculed by Python
 community, can be in fact very useful in this context.
 
@@ -58,10 +58,10 @@ drawbacks, which are becoming really visible while the application grows:
 
 #. It uses a global variable `database_connection`. This implies that whatever
    context this class might be used in, the database connection is always the
-   same. If in future you'd want to use `UserManager` on some kind of archival
-   database, while the rest of your application simultaneously works on the
-   default database, you'd be in trouble. Also you need to change a global
-   variable for unit testing.
+   same. If in the future you'd want to use `UserManager` on some kind of
+   archival database, while the rest of your application simultaneously works
+   on the default database, you'd be in trouble. Also you need to change
+   a global variable for unit testing.
 
 #. The `UserManager` creates its own `Encryptor` object. This means that if
    you'd need to change password hashing algorithm for one deployment (for
@@ -100,7 +100,7 @@ Those problems can be easily solved with dependency injection::
    application = graph.get('application')
    application.run()
 
-This may look like a silly overheas when presented in one file, but if this was
+This may look like a silly overhead when presented in one file, but if this was
 split in three separate modules we'd have all of our previously mentioned
 problems solved:
 
@@ -183,7 +183,7 @@ Powers Combined
 ---------------
 
 There is an important reason those two tools - dependency injection and
-interfaces - are coupled together into this package. Let's bring back
+interfaces - are coupled together into this project. Let's bring back
 a fragment of the dependency injection example::
 
    class UserManager(object):
@@ -191,7 +191,7 @@ a fragment of the dependency injection example::
          self.db = db
 
 If a programmer is asked to change some behavior of `UserManager` and
-encouters this code, he has no way of knowing what exactly can he do
+encounters this code, he has no way of knowing what exactly can he do
 with the `db` variable.  What are its methods and attributes?  He has to
 trace component configuration looking for specific implementation that
 is registered under ``db_connection``.  Fortunately, there's a better

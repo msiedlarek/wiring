@@ -139,10 +139,11 @@ class Graph(object):
 
     def acquire(self, specification, arguments=None):
         """
-        Returns an object for `specification` injecting its provider with
-        :term:`dependencies <dependency>` it declared and given `arguments`. If
-        there is a conflict between dependencies declared to be injected and
-        `arguments`, the value from `arguments` is used.
+        Returns an object for `specification` injecting its provider
+        with a mix of its :term:`dependencies <dependency>` and given
+        `arguments`. If there is a conflict between the injectable
+        dependencies and `arguments`, the value from `arguments` is
+        used.
 
         When one of `arguments` keys is neither an integer nor a string
         a `TypeError` is raised.

@@ -105,8 +105,8 @@ class ModuleMetaclass(type):
             def provide_fizz(self, db_connection=injected('db_connection')):
                 return db_connection.sql('SELECT fizz FROM buzz;')
 
-    Defined modules can be later register their providers into an :term:`object
-    graph` using :py:meth:`Module.add_to`.
+    Defined modules can later register their providers into an
+    :term:`object graph` using :py:meth:`Module.add_to`.
 
     When there is more than one provider declared for a single specification,
     :py:exc:`InvalidConfigurationError` is raised.

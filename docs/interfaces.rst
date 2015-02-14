@@ -8,10 +8,10 @@ Interfaces Guide
 
 When building a large, modular Python application it's easy to lost track of
 what exactly this function argument can be or which properties of that class
-are used where. For big application that does not fit entirely into a single
-programmer's mind, lack of static typing can be a problem.
+are used where. For a big application that does not fit entirely into
+a single programmer's mind, lack of static typing can be a problem.
 
-Dependency injection, with all it merits, also makes this problem worse. When
+Dependency injection, with all its merits, also makes this problem worse. When
 you're only marking some argument as a ``'db_connection'`` you're not really
 helping other programmers reason about it's properties. What attributes does
 this object have, what methods?
@@ -41,7 +41,7 @@ methods some other object has. Let's jump right in with an example interface:
       def change_password(old_password, new_password):
 	 """
 	 Changes user's password to `new_password`, providing that
-	 `old_password` is he's valid, current password.
+	 `old_password` is his valid, current password.
 	 """
 
 Interfaces are defined by declaring classes inheriting from
@@ -109,7 +109,7 @@ Validating Interfaces
 Unlike in statically-typed languages, interface implementations are not
 implicitly validated. That's because just by looking at a class in Python we
 cannot determine what properties will its instance have. That's why it is
-recommended to construct an object of the class and run it trough interface
+recommended to construct an object of the class and run it through interface
 validation as part of your unit tests.
 
 .. code-block:: python
@@ -125,7 +125,7 @@ if it detects any errors in the implementation.
 Using Interfaces with Dependency Injection
 ------------------------------------------
 
-Interfaces make perfect compations to the dependency injection pattern. They
+Interfaces make perfect companions to the dependency injection pattern. They
 serve as fantastic :term:`specifications <specification>`. To lear why, please
 read the :ref:`Powers Combined section of Rationale
 <rationale-powerscombined>`.
