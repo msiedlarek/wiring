@@ -5,7 +5,7 @@ License
 
    .. raw:: html
 
-      Copyright &copy; 2014 Mikołaj Siedlarek
+      Copyright &copy; 2014-2015 Mikołaj Siedlarek
       <&#109;&#105;&#107;&#111;&#108;&#097;&#106;&#064;&#115;&#105;&#101;&#100;&#108;&#097;&#114;&#101;&#107;&#046;&#112;&#108;>
 
    Licensed under the Apache License, Version 2.0 (the "License"); you may not

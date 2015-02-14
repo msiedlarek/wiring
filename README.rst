@@ -103,16 +103,16 @@ To generate html documentation::
 
 To release::
 
-   git tag -s -u gpgkey@example.com v0.1.0
+   git tag -s -u gpgkey@example.com v1.0.0
    python setup.py register
    python setup.py sdist upload -s -i gpgkey@example.com
    python setup.py bdist_wheel upload -s -i gpgkey@example.com
-   git push origin v0.1.0
+   git push origin v1.0.0
 
 License
 =======
 
-Copyright 2014 Mikołaj Siedlarek <mikolaj@siedlarek.pl>
+Copyright 2014-2015 Mikołaj Siedlarek <mikolaj@siedlarek.pl>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this software except in compliance with the License.
