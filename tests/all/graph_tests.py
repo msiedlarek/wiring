@@ -82,6 +82,30 @@ class GraphTest(unittest.TestCase):
         self.assertEqual(foo_instance(), 2)
         self.assertEqual(foo_instance(), 3)
 
+    def test_factory_arguments(self):
+        class DBConnection(object):
+            counter = 0
+            def __init__(self):
+                DBConnection.counter += 1
+                self.id = DBConnection.counter
+
+        @inject(db_factory=Factory('db'))
+        def foo(multiplier, db_factory=None):
+            self.assertNotIsInstance(db_factory, DBConnection)
+            db = db_factory()
+            self.assertIsInstance(db, DBConnection)
+            return multiplier * db.id
+
+        graph = Graph()
+        graph.register_factory('db', DBConnection)
+        graph.register_function('foo', foo)
+        graph.validate()
+
+        foo_instance = graph.get('foo')
+        self.assertEqual(foo_instance(100), 100)
+        self.assertEqual(foo_instance(1), 2)
+        self.assertEqual(foo_instance(100), 300)
+
     def test_factory_scope(self):
         class DBConnection(object):
             counter = 0

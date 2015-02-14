@@ -16,13 +16,20 @@ class Factory(tuple):
     """
     This class is a wrapper for a specification, declaring that instead of
     a created object for the specification, a callable returning the object
-    should be injected.
+    should be injected. This callable accepts additional arguments that will be
+    merged with the injected ones, just like in
+    :py:meth:`wiring.graph.Graph.get` method.
 
     For example::
 
+        class DBConnection(object):
+            @injected('db.url')
+            def __init__(self, url, read_only=False):
+                # ....
+
         @inject(db_factory=Factory('db.connection')):
         def get_user(id, db_factory=None):
-            db = db_factory()
+            db = db_factory(read_only=True)
             return db.get_model('user', id=id)
 
     Unless an instance for `db.connection` specification is cached in a scope,

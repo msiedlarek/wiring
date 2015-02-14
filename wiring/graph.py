@@ -172,9 +172,13 @@ class Graph(object):
         for argument, dependency_specification in dependencies:
             if argument not in realized_dependencies:
                 if isinstance(dependency_specification, Factory):
-                    realized_dependencies[argument] = lambda: self.acquire(
-                        dependency_specification.specification
-                    )
+                    def _factory(*args, **kwargs):
+                        return self.get(
+                            dependency_specification.specification,
+                            *args,
+                            **kwargs
+                        )
+                    realized_dependencies[argument] = _factory
                 else:
                     realized_dependencies[argument] = self.acquire(
                         dependency_specification
