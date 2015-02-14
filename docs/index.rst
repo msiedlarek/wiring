@@ -32,6 +32,9 @@ featuring:
 * interface definition and validation
 * modular component configuration
 
+Wiring is supported and tested on Python 2.7, Python 3.3, Python 3.4,
+PyPy and PyPy 3.
+
 This documentation is for Wiring version |release|. Wiring's versioning scheme
 fully complies with `Semantic Versioning 2.0`_ specification.
 
