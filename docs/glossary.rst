@@ -48,7 +48,7 @@ Glossary
 
    scope
       is an object implementing :py:interface:`wiring.scopes.IScope` interface,
-      that manages object cached in an :term:`object graph`.
+      that manages object cached for an :term:`object graph`.
 
       For example when an object is costly to create (like a database
       connection) but can be reused, :py:class:`wiring.scopes.ThreadScope`

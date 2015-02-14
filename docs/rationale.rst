@@ -177,6 +177,8 @@ libraries - its codebase and API are both pretty old and messy.
 
 .. _zope.interface: https://pypi.python.org/pypi/zope.interface
 
+.. _rationale-powerscombined:
+
 Powers Combined
 ---------------
 
@@ -188,11 +190,12 @@ a fragment of the dependency injection example::
       def __init__(self, db=injected('db_connection')):
          self.db = db
 
-If a programmer is asked to change some behavior of `UserManager` and encouters
-this code, he has no way of knowing what exactly can it do with `db` variable.
-What are its methods and attributes?  He has to trace component configuration
-looking for specific implementation that is registered under ``db_connection``.
-Fortunately, there's a better way::
+If a programmer is asked to change some behavior of `UserManager` and
+encouters this code, he has no way of knowing what exactly can he do
+with the `db` variable.  What are its methods and attributes?  He has to
+trace component configuration looking for specific implementation that
+is registered under ``db_connection``.  Fortunately, there's a better
+way::
 
    class IDatabaseConnection(object):
 

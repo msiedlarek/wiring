@@ -18,6 +18,7 @@ featuring:
 * dependency injection
 * interface definition and validation
 * modular component configuration
+* small, extremely pedantic codebase
 
 Wiring is supported and tested on Python 2.7, Python 3.3, Python 3.4,
 PyPy and PyPy 3.
