@@ -3,6 +3,15 @@ wiring.dependency
 
 .. automodule:: wiring.dependency
 
+Factory
+-------
+
+.. autoclass:: Factory
+
+   .. automethod:: __new__
+   .. autoattribute:: specification
+      :annotation:
+
 @inject
 -------
 

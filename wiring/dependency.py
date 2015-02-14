@@ -4,11 +4,90 @@ import six
 
 
 __all__ = (
+    'Factory',
     'UnrealizedInjection',
     'get_dependencies',
     'inject',
     'injected',
 )
+
+
+class Factory(tuple):
+    """
+    This class is a wrapper for a specification, declaring that instead of
+    a created object for the specification, a callable returning the object
+    should be injected.
+
+    For example::
+
+        @inject(db_factory=Factory('db.connection')):
+        def get_user(id, db_factory=None):
+            db = db_factory()
+            return db.get_model('user', id=id)
+
+    Unless an instance for `db.connection` specification is cached in a scope,
+    each execution of `get_user()` will create a new database connection
+    object.
+
+    This feature is particularly useful when you need an object from a narrower
+    scope, like a thread-scoped database connection in an application
+    singleton. You cannot just get a connection object in the application
+    constructor and save it, because when one of it methods is called from
+    a different thread it will use the same connection object. That effectively
+    defeats the purpose of thread scope.
+
+    To prevent that you can inject and save in a constructor a factory of
+    database connections and call it in every method to obtain a connection
+    object for current thread.
+    """
+
+    __slots__ = []
+
+    def __new__(cls, *specification):
+        """
+        You construct this class by giving it :term:`specification` elements.
+        For example, if your specification is::
+
+            (IDBConnection, 'archive')
+
+        then you can declare the :term:`dependency` like this::
+
+            @inject(db=Factory(IDBConnection, 'archive'))
+            def foo(db=None):
+                pass
+
+        When no specification is given to the class constructor,
+        a `ValueError` is raised.
+
+        :raises:
+            ValueError
+        """
+        if not specification:
+            raise ValueError("No dependency specification given.")
+        if len(specification) == 1:
+            specification = specification[0]
+        else:
+            specification = tuple(specification)
+        return super(Factory, cls).__new__(
+            cls,
+            (specification,)
+        )
+
+    @property
+    def specification(self):
+        """
+        A :term:`specification` of an object of which a factory will be
+        injected.
+        """
+        return self[0]
+
+    def __repr__(self):
+        specification = self.specification
+        if not isinstance(specification, tuple):
+            specification = '({})'.format(specification)
+        return '<Factory{specification}>'.format(
+            specification=specification
+        )
 
 
 class UnrealizedInjection(tuple):
@@ -43,11 +122,19 @@ class UnrealizedInjection(tuple):
 
             (IDBConnection, 'archive')
 
-        then you can use declare the :term:`dependency` like this::
+        then you can declare the :term:`dependency` like this::
 
             def foo(db=UnrealizedInjection(IDBConnection, 'archive')):
                 pass
+
+        When no specification is given to the class constructor,
+        a `ValueError` is raised.
+
+        :raises:
+            ValueError
         """
+        if not specification:
+            raise ValueError("No dependency specification given.")
         if len(specification) == 1:
             specification = specification[0]
         else:

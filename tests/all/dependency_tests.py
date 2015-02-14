@@ -3,6 +3,7 @@ import unittest
 import six
 
 from wiring.dependency import (
+    Factory,
     UnrealizedInjection,
     get_dependencies,
     inject,
@@ -14,6 +15,44 @@ from . import ModuleTest
 
 class DependencyModuleTest(ModuleTest):
     module = 'wiring.dependency'
+
+
+class FactoryTest(unittest.TestCase):
+
+    def test(self):
+        factory = Factory('foo', 2, 3)
+        self.assertTupleEqual(factory.specification, ('foo', 2, 3))
+        self.assertEqual(
+            repr(factory),
+            "<Factory('foo', 2, 3)>"
+        )
+
+        factory = Factory(42)
+        self.assertEqual(factory.specification, 42)
+        self.assertEqual(
+            repr(factory),
+            "<Factory(42)>"
+        )
+
+    def test_missing_specification(self):
+        with self.assertRaises(ValueError):
+            Factory()
+
+    def test_hash(self):
+        factory = Factory('test')
+        self.assertIsInstance(hash(factory), six.integer_types)
+        factory = Factory([])
+        with self.assertRaises(TypeError):
+            # List is an unhashable type.
+            hash(factory)
+
+    def test_immutability(self):
+        factory = Factory('test')
+        self.assertFalse(hasattr(factory, '__dict__'))
+        with self.assertRaises(AttributeError):
+            factory.specification = 'test2'
+        with self.assertRaises(AttributeError):
+            factory.foobar = 12
 
 
 class UnrealizedInjectionTest(unittest.TestCase):
@@ -34,6 +73,10 @@ class UnrealizedInjectionTest(unittest.TestCase):
             repr(injection),
             "<UnrealizedInjection(42)>"
         )
+
+    def test_missing_specification(self):
+        with self.assertRaises(ValueError):
+            UnrealizedInjection()
 
     def test_shortcut(self):
         self.assertEqual(injected, UnrealizedInjection)

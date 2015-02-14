@@ -100,11 +100,12 @@ class FunctionProvider(ProviderBase):
         user = graph.get('get_user')(12)
     """
 
-    def __init__(self, function):
+    def __init__(self, function, scope=None):
         super(FunctionProvider, self).__init__()
         self.dependencies = get_dependencies(function)
         self.function = function
         """Wrapped function object."""
+        self.scope = scope
 
     def __call__(self, *args, **kwargs):
         # We need to update it later, so we need to make sure it's not a tuple.

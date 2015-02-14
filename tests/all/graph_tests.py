@@ -8,6 +8,7 @@ from wiring.graph import (
     Graph,
 )
 from wiring.dependency import (
+    Factory,
     injected,
     inject,
 )
@@ -41,13 +42,69 @@ class GraphTest(unittest.TestCase):
         graph = Graph()
         graph.register_instance('db.hostname', db_hostname)
         graph.register_factory('db_connection', get_database_connection)
+        graph.register_function(
+            'db_connection_function',
+            get_database_connection
+        )
         graph.register_factory(TestClass, TestClass)
         graph.validate()
 
         self.assertEqual(graph.get('db.hostname'), 'example.com')
+        self.assertDictEqual(
+            graph.get('db_connection_function')(),
+            {'connected': True}
+        )
         test_instance = graph.get(TestClass)
         self.assertIsInstance(test_instance, TestClass)
         self.assertTrue(test_instance.is_ok)
+
+    def test_factory(self):
+        class DBConnection(object):
+            counter = 0
+            def __init__(self):
+                DBConnection.counter += 1
+                self.id = DBConnection.counter
+
+        @inject(Factory('db'))
+        def foo(db_factory):
+            self.assertNotIsInstance(db_factory, DBConnection)
+            db = db_factory()
+            self.assertIsInstance(db, DBConnection)
+            return db.id
+
+        graph = Graph()
+        graph.register_factory('db', DBConnection)
+        graph.register_function('foo', foo)
+        graph.validate()
+
+        foo_instance = graph.get('foo')
+        self.assertEqual(foo_instance(), 1)
+        self.assertEqual(foo_instance(), 2)
+        self.assertEqual(foo_instance(), 3)
+
+    def test_factory_scope(self):
+        class DBConnection(object):
+            counter = 0
+            def __init__(self):
+                DBConnection.counter += 1
+                self.id = DBConnection.counter
+
+        @inject(Factory('db'))
+        def foo(db_factory):
+            self.assertNotIsInstance(db_factory, DBConnection)
+            db = db_factory()
+            self.assertIsInstance(db, DBConnection)
+            return db.id
+
+        graph = Graph()
+        graph.register_factory('db', DBConnection, scope=ProcessScope)
+        graph.register_function('foo', foo)
+        graph.validate()
+
+        foo_instance = graph.get('foo')
+        self.assertEqual(foo_instance(), 1)
+        self.assertEqual(foo_instance(), 1)
+        self.assertEqual(foo_instance(), 1)
 
     def test_self_dependency(self):
         @inject('foobar')
@@ -166,7 +223,7 @@ class GraphTest(unittest.TestCase):
             (33, 22, 44)
         )
 
-    def test_scope(self):
+    def test_scope_factory(self):
         notlocal = [0]
 
         def factory():
@@ -191,6 +248,25 @@ class GraphTest(unittest.TestCase):
 
         self.assertEqual(graph.get('unscoped'), 4)
 
+    def test_scope_function(self):
+        notlocal = [0]
+
+        def factory():
+            notlocal[0] += 1
+            return notlocal[0]
+
+        @inject(i='i')
+        def function(i):
+            return i
+
+        graph = Graph()
+        graph.register_factory('i', factory)
+        graph.register_function('function', function, scope=ProcessScope)
+
+        self.assertEqual(graph.get('function')(), 1)
+        self.assertEqual(graph.get('function')(), 1)
+        self.assertEqual(graph.get('function')(), 1)
+
     def test_unknown_scope(self):
         class FooBarScope(object):
             pass
@@ -199,6 +275,10 @@ class GraphTest(unittest.TestCase):
 
         with self.assertRaises(UnknownScopeError) as cm:
             graph.register_factory('foo', lambda: None, scope=FooBarScope)
+        self.assertEqual(cm.exception.scope_type, FooBarScope)
+        self.assertIn('FooBarScope', str(cm.exception))
 
+        with self.assertRaises(UnknownScopeError) as cm:
+            graph.register_function('foo', lambda: None, scope=FooBarScope)
         self.assertEqual(cm.exception.scope_type, FooBarScope)
         self.assertIn('FooBarScope', str(cm.exception))

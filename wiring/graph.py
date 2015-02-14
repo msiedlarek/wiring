@@ -3,8 +3,10 @@ import operator
 
 import six
 
+from wiring.dependency import Factory
 from wiring.providers import (
     FactoryProvider,
+    FunctionProvider,
     InstanceProvider,
 )
 from wiring.scopes import (
@@ -169,9 +171,14 @@ class Graph(object):
         dependencies = six.iteritems(provider.dependencies)
         for argument, dependency_specification in dependencies:
             if argument not in realized_dependencies:
-                realized_dependencies[argument] = self.acquire(
-                    dependency_specification
-                )
+                if isinstance(dependency_specification, Factory):
+                    realized_dependencies[argument] = lambda: self.acquire(
+                        dependency_specification.specification
+                    )
+                else:
+                    realized_dependencies[argument] = self.acquire(
+                        dependency_specification
+                    )
         args = []
         kwargs = {}
         for argument, value in six.iteritems(realized_dependencies):
@@ -227,6 +234,21 @@ class Graph(object):
             FactoryProvider(factory, scope=scope)
         )
 
+    def register_function(self, specification, function, scope=None):
+        """
+        Shortcut for creating and registering
+        a :py:class:`wiring.providers.FunctionProvider`.
+        """
+        if scope is not None:
+            try:
+                scope = self.scopes[scope]
+            except KeyError:
+                raise UnknownScopeError(scope)
+        self.register_provider(
+            specification,
+            FunctionProvider(function, scope=scope)
+        )
+
     def register_instance(self, specification, instance):
         """
         Registers given `instance` to be used as-is when an object specified by
@@ -276,6 +298,8 @@ class Graph(object):
             provider = self.providers[specification]
             dependencies = six.itervalues(provider.dependencies)
             for dependency in dependencies:
+                if isinstance(dependency, Factory):
+                    dependency = dependency.specification
                 if dependency not in self.providers:
                     raise MissingDependencyError(specification, dependency)
                 if dependency == specification:
