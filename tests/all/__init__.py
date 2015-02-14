@@ -27,7 +27,34 @@ class ModuleTest(unittest.TestCase):
 
 class InitTest(unittest.TestCase):
 
-    def test(self):
+    imported_modules = (
+        'wiring.configuration',
+        'wiring.dependency',
+        'wiring.graph',
+        'wiring.interface',
+        'wiring.providers',
+        'wiring.scopes',
+    )
+
+    def test_imports(self):
+        import wiring
+        for module in self.imported_modules:
+            package = importlib.import_module(module)
+            if not hasattr(package, '__all__'):
+                continue
+            for name in package.__all__:
+                self.assertTrue(
+                    hasattr(wiring, name),
+                    msg=(
+                        "Module `wiring` is missing `{name}` which should be"
+                        " wildcard-imported from `{module}`."
+                    ).format(
+                        name=name,
+                        module=module
+                    )
+                )
+
+    def test_metadata(self):
         import wiring
 
         self.assertIsInstance(wiring.__title__, six.string_types)
@@ -35,12 +62,3 @@ class InitTest(unittest.TestCase):
 
         self.assertIsInstance(wiring.__version__, six.string_types)
         self.assertRegexpMatches(wiring.__version__, r'^\d+\.\d+\.\d+$')
-
-        self.assertIsInstance(wiring.__author__, six.text_type)
-        self.assertTrue(wiring.__author__.strip())
-
-        self.assertIsInstance(wiring.__license__, six.text_type)
-        self.assertTrue(wiring.__license__.strip())
-
-        self.assertIsInstance(wiring.__copyright__, six.text_type)
-        self.assertTrue(wiring.__copyright__.strip())

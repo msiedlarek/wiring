@@ -4,22 +4,20 @@ from setuptools import setup
 from codecs import open
 from os import path
 
-import wiring
-
 here = path.abspath(path.dirname(__file__))
 
 with open(path.join(here, 'README.rst'), encoding='utf-8') as readme:
     long_description = readme.read()
 
 setup(
-    name=wiring.__title__,
-    version=wiring.__version__,
+    name='wiring',
+    version='0.1.0',
     description='Architectural foundation for Python applications.',
     long_description=long_description,
     url='https://github.com/msiedlarek/wiring',
-    author=wiring.__author__,
+    author=u'Mikołaj Siedlarek',
     author_email='mikolaj@siedlarek.pl',
-    license=wiring.__license__,
+    license='Apache License, Version 2.0',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

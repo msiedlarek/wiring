@@ -42,19 +42,16 @@ Quick Peek
 
 .. code-block:: python
 
-   from wiring.graph import Graph
-   from wiring.configuration import Module, provides, scope
-   from wiring.scopes import ThreadScope
-   from wiring.dependency import inject, injected
-   from wiring.interface import interface, implements
+   import wiring
+   from wiring import provides, scope, inject, injected, implements
 
-   class DatabaseModule(Module):
+   class DatabaseModule(wiring.Module):
       @provides('db_connection')
-      @scope(ThreadScope)
+      @scope(wiring.ThreadScope)
       def provide_db_connection(self, database_url=injected('database_url')):
          return db_engine.connect(database_url)
 
-   class IUserManager(Interface):
+   class IUserManager(wiring.Interface):
       def get(id):
          """Get user by ID."""
 
@@ -66,14 +63,14 @@ Quick Peek
          self.db = db_connection
 
       def get(self, id):
-         self.db.sql('SELECT * FROM users WHERE id = :id', id=id)
+         return self.db.sql('SELECT * FROM users WHERE id = :id', id=id)
 
-   class UserModule(Module):
+   class UserModule(wiring.Module):
       factories = {
          IUserManager: DefaultUserManager,
       }
 
-   graph = Graph()
+   graph = wiring.Graph()
    DatabaseModule().add_to(graph)
    UserModule().add_to(graph)
    graph.register_instance('database_url', 'sqlite://some.db')
