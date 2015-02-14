@@ -10,9 +10,6 @@ from wiring.providers import (
 )
 
 
-# TODO(msiedlarek): add `get_provided()`
-# TODO(msiedlarek): add `get_scope()`
-
 __all__ = (
     'InvalidConfigurationError',
     'Module',
@@ -216,7 +213,7 @@ class Module(object):
 
     def add_to(self, graph):
         """
-        Register all of declared provider into a given :term:`object graph`.
+        Register all of declared providers into a given :term:`object graph`.
         """
         for specification, provider in six.iteritems(self.providers):
             graph.register_provider(specification, provider)

@@ -289,7 +289,6 @@ def get_implemented_interfaces(cls):
     Returns a set of :term:`interfaces <interface>` declared as implemented by
     class `cls`.
     """
-    # TODO(msiedlarek): should return interfaces in MRO
     if hasattr(cls, '__interfaces__'):
         return cls.__interfaces__
     return six.moves.reduce(
