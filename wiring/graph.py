@@ -120,6 +120,7 @@ class Graph(object):
     """
 
     # TODO(msiedlarek): make providers and scopes attributes read-only
+    # TODO(msiedlarek): add unregister() and unregister_scope() methods
 
     def __init__(self):
         self.providers = {}

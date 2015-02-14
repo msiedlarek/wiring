@@ -3,6 +3,12 @@ wiring.scopes
 
 .. automodule:: wiring.scopes
 
+SingletonScope
+--------------
+
+.. autoclass:: SingletonScope
+   :show-interfaces:
+
 ProcessScope
 ------------
 

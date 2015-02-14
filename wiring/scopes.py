@@ -1,3 +1,4 @@
+import os
 import threading
 
 from wiring import interface
@@ -38,13 +39,9 @@ class IScope(interface.Interface):
 
 
 @interface.implements(IScope)
-class ProcessScope(object):
+class SingletonScope(object):
     """
-    :term:`Scope` where provided instances are cached per-process.
-
-    .. note::
-
-        If you're looking for a `SingletonScope` you just found it.
+    :term:`Scope` where only one provided instance is created and reused.
     """
 
     def __init__(self):
@@ -58,6 +55,36 @@ class ProcessScope(object):
 
     def __contains__(self, specification):
         return (specification in self._cache)
+
+
+@interface.implements(IScope)
+class ProcessScope(object):
+    """
+    :term:`Scope` where provided instances are cached per-process. The
+    instances cached in this scope will not be available for a forked process.
+    """
+
+    def __init__(self):
+        self._pid = os.getpid()
+        self._cache = {}
+
+    def __getitem__(self, specification):
+        self._validate()
+        return self._cache[specification]
+
+    def __setitem__(self, specification, instance):
+        self._validate()
+        self._cache[specification] = instance
+
+    def __contains__(self, specification):
+        self._validate()
+        return (specification in self._cache)
+
+    def _validate(self):
+        current_pid = os.getpid()
+        if self._pid != current_pid:  # pragma: no cover
+            self._pid = current_pid
+            self._cache = {}
 
 
 @interface.implements(IScope)
