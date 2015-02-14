@@ -15,9 +15,11 @@ Graph
    .. automethod:: acquire
    .. automethod:: get
    .. automethod:: register_provider
+   .. automethod:: unregister_provider
    .. automethod:: register_factory
    .. automethod:: register_instance
    .. automethod:: register_scope
+   .. automethod:: unregister_scope
    .. automethod:: validate
 
 GraphValidationError

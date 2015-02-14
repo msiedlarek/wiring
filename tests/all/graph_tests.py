@@ -306,3 +306,18 @@ class GraphTest(unittest.TestCase):
             graph.register_function('foo', lambda: None, scope=FooBarScope)
         self.assertEqual(cm.exception.scope_type, FooBarScope)
         self.assertIn('FooBarScope', str(cm.exception))
+
+    def test_unregister_provider(self):
+        graph = Graph()
+        graph.register_instance('foo', 'bar')
+        self.assertEqual(graph.get('foo'), 'bar')
+        graph.unregister_provider('foo')
+        with self.assertRaises(KeyError):
+            graph.get('foo')
+
+    def test_unregister_scope(self):
+        graph = Graph()
+        graph.register_factory('foo', lambda: None, scope=ProcessScope)
+        graph.unregister_scope(ProcessScope)
+        with self.assertRaises(UnknownScopeError):
+            graph.register_factory('bar', lambda: None, scope=ProcessScope)

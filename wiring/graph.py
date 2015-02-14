@@ -220,6 +220,12 @@ class Graph(object):
         """
         self.providers[specification] = provider
 
+    def unregister_provider(self, specification):
+        """
+        Removes :term:`provider` for given `specification` from the graph.
+        """
+        del self.providers[specification]
+
     def register_factory(self, specification, factory, scope=None):
         """
         Shortcut for creating and registering
@@ -264,6 +270,12 @@ class Graph(object):
         may be later referred to by providers using this type.
         """
         self.scopes[scope_type] = instance
+
+    def unregister_scope(self, scope_type):
+        """
+        Removes a :term:`scope` type from the graph.
+        """
+        del self.scopes[scope_type]
 
     def validate(self):
         """
