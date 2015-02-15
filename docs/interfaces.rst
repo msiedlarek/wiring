@@ -12,9 +12,9 @@ are used where. For a big application that does not fit entirely into
 a single programmer's mind, lack of static typing can be a problem.
 
 Dependency injection, with all its merits, also makes this problem worse. When
-you're only marking some argument as a ``'db_connection'`` you're not really
+you're only marking some argument as a ``'db_connection'``, you're not really
 helping other programmers reason about it's properties. What attributes does
-this object have, what methods?
+this object have? What methods?
 
 And what if you want to switch to a new database engine, and need to write
 a new ``'db_connection'``? How do you know what properties should it have? Even
@@ -27,8 +27,8 @@ system - as a natural counterweight for its dependency injection feature.
 Defining Interfaces
 -------------------
 
-:term:`Interfaces <interface>` are objects that describe what attributes and
-methods some other object has. Let's jump right in with an example interface:
+:term:`Interfaces <interface>` are classes that describe what attributes and
+methods some object has. Let's jump right in with an example interface:
 
 .. code-block:: python
 
@@ -45,8 +45,8 @@ methods some other object has. Let's jump right in with an example interface:
 	 """
 
 Interfaces are defined by declaring classes inheriting from
-:py:class:`Interface <wiring.interface.Interface>` class.  Their names should
-start with a capital ``I`` to easily distinguish between them and their
+:py:class:`Interface <wiring.interface.Interface>`.  Their names should start
+with a capital ``I`` to easily distinguish between them and their
 implementations.
 
 This interface declares two requirements that an object must meet to be
@@ -89,6 +89,12 @@ straightforward:
 
 There are three important things to notice here:
 
+#. Interface describes **properties of an object, not of a class**. Notice that
+   `email` attribute belongs to a `User` instance, not the class.
+#. Interface describes API of an object, not its implementation. Notice that
+   there is no `self` argument in interface definition of `change_password`
+   method. That's because a user of the API doesn't have to actually provide
+   it.
 #. To implement interface you just need to create an object conforming to it.
    There is an :py:func:`@implements <wiring.interface.implements>` decorator,
    but it is purely optional. An object doesn't have to be an instance of
@@ -96,12 +102,6 @@ There are three important things to notice here:
    the interface. Using the decorator is considered a good practice, as it aids
    other programmers in reasoning about the class and can actually serve as its
    documentation.
-#. Interface describes **properties of an object, not of a class**. Notice that
-   `email` attribute belongs to a `User` instance, not the class.
-#. Interface describes API of an object, not its implementation. Notice that
-   there is no `self` argument in interface definition of `change_password`
-   method. That's because a user of the API doesn't have to actually provide
-   it.
 
 Validating Interfaces
 ---------------------
@@ -125,7 +125,7 @@ if it detects any errors in the implementation.
 Using Interfaces with Dependency Injection
 ------------------------------------------
 
-Interfaces make perfect companions to the dependency injection pattern. They
+Interfaces make perfect companions to the dependency injection pattern - they
 serve as fantastic :term:`specifications <specification>`. To lear why, please
 read the :ref:`Powers Combined section of Rationale
 <rationale-powerscombined>`.

@@ -56,12 +56,12 @@ Relationships between these objects can be represented in a graph like this:
 .. image:: dependency_injection/example1.*
    :width: 248px
 
-In Wiring, graphs like this one are represented by
-:py:class:`wiring.graph.Graph`. Usually an application has a single
-object graph, that can be checked for :term:`dependency cycles
-<dependency cycle>` and missing dependencies, and from which the
-application gets its entry point. The graph takes care of providing each
-object with its dependencies, hence wiring them together.
+In Wiring, graphs like this one are managed using
+:py:class:`wiring.graph.Graph` class. Usually an application has a single
+object graph, that can be checked for :term:`dependency cycles <dependency
+cycle>` and missing dependencies, and from which the application gets its entry
+point. The graph takes care of providing each object with its dependencies,
+hence wiring them together.
 
 You'll see all that in a moment, but first we need to explain where are
 all those objects coming from.
@@ -136,7 +136,7 @@ Example
 ^^^^^^^
 
 Let's use the :py:func:`@inject <wiring.dependency.inject>` decorator to
-annotate the code from the first example.
+annotate the code from our first example:
 
 .. code-block:: python
 
@@ -175,6 +175,10 @@ annotate the code from the first example.
 	    self.user_manager.get_user(user_id).email,
 	    "Welcome!"
 	 )
+
+Now it's obvious which arguments are injectable dependencies and what exactly
+should be injected into each one of them. But to actually do the injection we
+need a way to construct all those dependencies.
 
 Providers
 ---------
@@ -239,7 +243,8 @@ also a callable.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This provider is the simplest one - it just wraps an already created object to
-conform to the provider interface. It always returns the object it is given.
+conform to the provider interface. It always returns the object it was given in
+the constructor.
 
 .. code-block:: python
 
@@ -284,8 +289,10 @@ also be written like this:
    application = graph.get('application')
    application.send_welcome_email(213)
 
-There is a more convenient way of creating providers and registering them in
-the graph, called :term:`modules <module>`, which you'll see shortly.
+The graph takes care of creating all those objects in a right order, using
+providers, and passing them to dependent classes.  There is a more convenient
+way of creating providers and registering them in the graph, called
+:term:`modules <module>`, which you'll see shortly.
 
 Scopes
 ------
@@ -344,7 +351,9 @@ a :py:class:`ThreadScope <wiring.scopes.ThreadScope>`.
    application = graph.get('application')
    application.send_welcome_email(213)
 
-Yes, that little ``scope=ThreadScope`` is all it takes.
+Yes, that little ``scope=ThreadScope`` is all it takes. If we requested a new
+`Application` object from this graph in the same thread, the database
+connection would be reused.
 
 Injecting Factories
 -------------------
@@ -374,11 +383,11 @@ Scopes have one little caveat. This code is an example of a quite subtle bug:
    graph.register_factory('db', Database, scope=ThreadScope)
    graph.register_factory('managers.user', UserManager, scope=SingletonScope)
 
-Notice the scope that providers of those objects were registered with.
-The database object is cached per-thread, but user manager is
-a singleton. While a single `SingletonScope` lasts through entire
-program lifetime, a `ThreadScope` can change multiple times. This means
-that the `ThreadScope` is a *narrower* scope than the `SingletonScope`.
+Notice the scope that providers of those objects were registered with.  The
+database object is cached per-thread, but user manager is a singleton. While
+a `SingletonScope` lasts through entire program lifetime, a `ThreadScope` can
+change multiple times. This means that the `ThreadScope` is a *narrower* scope
+than the `SingletonScope`.
 
 Noticed the bug yet? `UserManager` is created only once and reused for all
 threads. When it is created, it is provided with a `Database` instance **for
@@ -514,7 +523,7 @@ with :term:`modules <module>`:
    application_de = graph.get('application', 'de')
    application_de.send_welcome_email(208)
 
-Now, that's much better. Not only is there less repetition. You can also easily
+Now, that's much better. Not only is there less repetition, you can also easily
 put your data and application modules in different files, or even replace
 entire data module with a new one - just by changing a single line of code.
 
@@ -552,7 +561,7 @@ registered in a graph for `db.url` specification, in the `SingletonScope`.
 Graph Validation
 ----------------
 
-As a final touch let's add a single line to our graph building code:
+As a final touch, let's add a single line to our graph building code:
 
 .. code-block:: python
 

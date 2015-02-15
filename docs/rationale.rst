@@ -1,15 +1,17 @@
 Rationale
 =========
 
-While writing medium-to-large applications in Python (or any dynamically typed
-language for that matter) can be a very bad idea, this just happens, and quite
-often Python developer must deal with them.
+Writing medium-to-large applications in Python is something that happens more
+and more often as the language gains popularity, particularly in the web
+environment.  However, Python, traditionally a scripting and prototyping
+language, has a shortage of good tooling to tackle architectural challenges of
+big, object-oriented applications.
 
 Programming environments like Java, designed and used for years in enterprise
-settings have already developed tools to tackle architectural problems specific
-to big, object-oriented applications. Java language constructs like interfaces
-and frameworks like `Spring`_ or `Guice`_, while commonly ridiculed by Python
-community, can be in fact very useful in this context.
+settings, have already developed some ideas how to meet those challenges. Java
+language constructs like interfaces and frameworks like `Spring`_ or `Guice`_,
+while commonly ridiculed by Python community, can be in fact very useful in
+this context.
 
 Wiring was created from the real need of a real application I've been working
 on and aims to solve its problems by adapting some of those proven ideas to the
