@@ -36,10 +36,13 @@ featuring:
 Wiring is supported and tested on Python 2.7, Python 3.3, Python 3.4,
 PyPy and PyPy 3.
 
+Source code and issue tracker are `available at GitHub`_.
+
 This documentation is for Wiring version |release|. Wiring's versioning scheme
 fully complies with `Semantic Versioning 2.0`_ specification.
 
 .. _Semantic Versioning 2.0: http://semver.org/spec/v2.0.0.html
+.. _available at GitHub: https://github.com/msiedlarek/wiring
 
 Quick Peek
 ----------
