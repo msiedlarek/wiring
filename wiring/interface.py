@@ -177,9 +177,9 @@ class InterfaceMetaclass(type):
         # Filter out private attributes which should not be treated as
         # interface declarations.
         for name, value in six.iteritems(attributes):
-            if (isinstance(value, classmethod)
-                    or isinstance(value, staticmethod)
-                    or name in ignored_attribute_names):
+            if (isinstance(value, classmethod) or
+                    isinstance(value, staticmethod) or
+                    name in ignored_attribute_names):
                 ignored_attributes[name] = value
             else:
                 processed_attributes[name] = value
