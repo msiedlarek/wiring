@@ -10,6 +10,7 @@ from wiring.providers import (
     InstanceProvider,
 )
 from wiring.scopes import (
+    SingletonScope,
     ProcessScope,
     ThreadScope,
 )
@@ -134,6 +135,7 @@ class Graph(object):
         instances must conform to :py:interface:`wiring.scopes.IScope`
         interface.
         """
+        self.register_scope(SingletonScope, SingletonScope())
         self.register_scope(ProcessScope, ProcessScope())
         self.register_scope(ThreadScope, ThreadScope())
 
