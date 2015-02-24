@@ -25,7 +25,7 @@ class IProvider(interface.Interface):
     """
 
     scope = """
-    A :term:`scope` object managing how provided instances will be
+    The type of :term:`scope` that should manage how provided instances will be
     cached, or None when not applicable.
     """
 

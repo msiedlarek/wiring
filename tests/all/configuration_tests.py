@@ -83,9 +83,10 @@ class ModuleTest(unittest.TestCase):
             graph.providers['singleton'],
             FactoryProvider
         )
+        self.assertIs(graph.get('singleton'), graph.get('singleton'))
         self.assertIsInstance(graph.providers['foobar'], FunctionProvider)
         self.assertIsInstance(graph.providers[('buzz', 12)], FactoryProvider)
-        self.assertIsInstance(
+        self.assertIs(
             graph.providers[('buzz', 12)].scope,
             ProcessScope
         )

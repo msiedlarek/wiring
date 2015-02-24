@@ -164,10 +164,19 @@ class Graph(object):
             realized_dependencies = {}
         else:
             realized_dependencies = copy.copy(arguments)
+
         provider = self.providers[specification]
+
+        scope = None
         if provider.scope is not None:
-            if specification in provider.scope:
-                return provider.scope[specification]
+            try:
+                scope = self.scopes[provider.scope]
+            except KeyError:
+                raise UnknownScopeError(provider.scope)
+
+        if scope is not None and specification in scope:
+            return scope[specification]
+
         dependencies = six.iteritems(provider.dependencies)
         for argument, dependency_specification in dependencies:
             if argument not in realized_dependencies:
@@ -183,6 +192,7 @@ class Graph(object):
                     realized_dependencies[argument] = self.acquire(
                         dependency_specification
                     )
+
         args = []
         kwargs = {}
         for argument, value in six.iteritems(realized_dependencies):
@@ -196,13 +206,16 @@ class Graph(object):
                 raise TypeError(
                     "{} is not a valid argument key".format(repr(argument))
                 )
+
         args = map(
             operator.itemgetter(1),
             sorted(args, key=operator.itemgetter(0))
         )
         instance = provider(*args, **kwargs)
-        if provider.scope is not None:
-            provider.scope[specification] = instance
+
+        if scope is not None:
+            scope[specification] = instance
+
         return instance
 
     def get(self, specification, *args, **kwargs):
@@ -221,6 +234,8 @@ class Graph(object):
         :term:`specification` is needed. If there was already a provider for
         this specification it is overriden.
         """
+        if provider.scope is not None and provider.scope not in self.scopes:
+            raise UnknownScopeError(provider.scope)
         self.providers[specification] = provider
 
     def unregister_provider(self, specification):
@@ -234,11 +249,6 @@ class Graph(object):
         Shortcut for creating and registering
         a :py:class:`wiring.providers.FactoryProvider`.
         """
-        if scope is not None:
-            try:
-                scope = self.scopes[scope]
-            except KeyError:
-                raise UnknownScopeError(scope)
         self.register_provider(
             specification,
             FactoryProvider(factory, scope=scope)
@@ -249,11 +259,6 @@ class Graph(object):
         Shortcut for creating and registering
         a :py:class:`wiring.providers.FunctionProvider`.
         """
-        if scope is not None:
-            try:
-                scope = self.scopes[scope]
-            except KeyError:
-                raise UnknownScopeError(scope)
         self.register_provider(
             specification,
             FunctionProvider(function, scope=scope)
