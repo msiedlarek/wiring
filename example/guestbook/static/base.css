@@ -1,0 +1,10 @@
+body {
+    font-family: sans-serif;
+    color: #333;
+    font-size: 14px;
+}
+
+#content {
+    width: 600px;
+    margin: 0 auto 0 auto;
+}
