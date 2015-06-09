@@ -122,6 +122,19 @@ class Graph(object):
     and creating provided objects.
     """
 
+    class FactoryProxy(object):
+        """
+        A proxy object injected when `Factory(<specification>)` is requested as
+        a dependency.
+        """
+
+        def __init__(self, graph, specification):
+            self.graph = graph
+            self.specification = specification
+
+        def __call__(self, *args, **kwargs):
+            return self.graph.get(self.specification, *args, **kwargs)
+
     def __init__(self):
         self.providers = {}
         """
@@ -181,13 +194,10 @@ class Graph(object):
         for argument, dependency_specification in dependencies:
             if argument not in realized_dependencies:
                 if isinstance(dependency_specification, Factory):
-                    def _factory(*args, **kwargs):
-                        return self.get(
-                            dependency_specification.specification,
-                            *args,
-                            **kwargs
-                        )
-                    realized_dependencies[argument] = _factory
+                    realized_dependencies[argument] = self.FactoryProxy(
+                        self,
+                        dependency_specification.specification
+                    )
                 else:
                     realized_dependencies[argument] = self.acquire(
                         dependency_specification
