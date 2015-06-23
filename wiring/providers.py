@@ -108,15 +108,14 @@ class FunctionProvider(ProviderBase):
         self.scope = scope
 
     def __call__(self, *args, **kwargs):
-        # We need to update it later, so we need to make sure it's not a tuple.
-        args = list(args)
-
         @functools.wraps(self.function)
         def wrapper(*call_args, **call_kwargs):
-            args[:len(call_args)] = call_args
-            kwargs.update(call_kwargs)
-            return self.function(*args, **kwargs)
-
+            # We need to update it, so we need to make sure it's not a tuple.
+            target_args = list(args)
+            target_args[:len(call_args)] = call_args
+            target_kwargs = kwargs
+            target_kwargs.update(call_kwargs)
+            return self.function(*target_args, **target_kwargs)
         return wrapper
 
 

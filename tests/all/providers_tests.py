@@ -97,6 +97,18 @@ class FunctionProviderTest(unittest.TestCase):
         self.assertEqual(wrapped_function(6), 7)
         self.assertEqual(wrapped_function(-2), -1)
 
+    def test_variable_arguments(self):
+        """
+        This test is related to a problem with variable number of arguments
+        and FunctionProvider, see issue #4.
+        """
+        def foo(*args):
+            return tuple(args)
+        provider = FunctionProvider(foo)
+        wrapped_function = provider()
+        self.assertSequenceEqual(wrapped_function(1, 2), (1, 2))
+        self.assertSequenceEqual(wrapped_function(1), (1,))
+
 
 class InstanceProviderTest(unittest.TestCase):
 
