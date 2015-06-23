@@ -11,7 +11,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as readme:
 
 setup(
     name='wiring',
-    version='0.2.2',
+    version='0.2.3',
     description='Architectural foundation for Python applications.',
     long_description=long_description,
     url='https://github.com/msiedlarek/wiring',
