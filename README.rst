@@ -107,11 +107,11 @@ To generate html documentation::
 
 To release::
 
-   git tag -s -u gpgkey@example.com v0.2.3
+   git tag -s -u gpgkey@example.com v0.2.4
    python setup.py register
    python setup.py sdist upload -s -i gpgkey@example.com
    python setup.py bdist_wheel upload -s -i gpgkey@example.com
-   git push origin v0.2.3
+   git push origin v0.2.4
 
 License
 =======

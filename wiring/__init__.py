@@ -16,7 +16,7 @@ from wiring.scopes import *  # noqa
 __title__ = 'wiring'
 """Name of this package."""
 
-__version__ = '0.2.3'
+__version__ = '0.2.4'
 """
 Version of this package, compatible with
 `Semantic Versioning 2.0 <http://semver.org/spec/v2.0.0.html>`_.
