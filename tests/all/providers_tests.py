@@ -109,6 +109,36 @@ class FunctionProviderTest(unittest.TestCase):
         self.assertSequenceEqual(wrapped_function(1, 2), (1, 2))
         self.assertSequenceEqual(wrapped_function(1), (1,))
 
+    def test_kwargs_copy(self):
+        def foo(*args, **kwargs):
+            return tuple(args), dict(kwargs)
+
+        provider = FunctionProvider(foo)
+        wrapped_function = provider()
+        self.assertSequenceEqual(
+            wrapped_function(1, 2, test=1),
+            ((1, 2), {'test': 1})
+        )
+        self.assertSequenceEqual(
+            wrapped_function(1, 2, test=2),
+            ((1, 2), {'test': 2})
+        )
+        self.assertSequenceEqual(
+            wrapped_function(1, 2),
+            ((1, 2), {})
+        )
+
+        provider = FunctionProvider(foo)
+        wrapped_function = provider()
+        self.assertSequenceEqual(
+            wrapped_function(1, 2, test=1),
+            ((1, 2), {'test': 1})
+        )
+        self.assertSequenceEqual(
+            wrapped_function(test=2),
+            ((), {'test': 2})
+        )
+
 
 class InstanceProviderTest(unittest.TestCase):
 

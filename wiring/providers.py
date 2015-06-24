@@ -1,4 +1,5 @@
 import functools
+import copy
 
 from wiring import interface
 from wiring.dependency import get_dependencies
@@ -110,10 +111,10 @@ class FunctionProvider(ProviderBase):
     def __call__(self, *args, **kwargs):
         @functools.wraps(self.function)
         def wrapper(*call_args, **call_kwargs):
-            # We need to update it, so we need to make sure it's not a tuple.
+            # Make sure they're not a tuple and copy them at the same time.
             target_args = list(args)
             target_args[:len(call_args)] = call_args
-            target_kwargs = kwargs
+            target_kwargs = copy.copy(kwargs)
             target_kwargs.update(call_kwargs)
             return self.function(*target_args, **target_kwargs)
         return wrapper
