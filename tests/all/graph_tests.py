@@ -1,16 +1,12 @@
 import unittest
 
+from wiring.dependency import Factory, inject, injected
 from wiring.graph import (
-    SelfDependencyError,
-    MissingDependencyError,
     DependencyCycleError,
-    UnknownScopeError,
     Graph,
-)
-from wiring.dependency import (
-    Factory,
-    injected,
-    inject,
+    MissingDependencyError,
+    SelfDependencyError,
+    UnknownScopeError
 )
 from wiring.scopes import ProcessScope
 
@@ -61,6 +57,7 @@ class GraphTest(unittest.TestCase):
     def test_factory(self):
         class DBConnection(object):
             counter = 0
+
             def __init__(self):
                 DBConnection.counter += 1
                 self.id = DBConnection.counter
@@ -85,6 +82,7 @@ class GraphTest(unittest.TestCase):
     def test_factory_arguments(self):
         class DBConnection(object):
             counter = 0
+
             def __init__(self):
                 DBConnection.counter += 1
                 self.id = DBConnection.counter
@@ -109,6 +107,7 @@ class GraphTest(unittest.TestCase):
     def test_factory_scope(self):
         class DBConnection(object):
             counter = 0
+
             def __init__(self):
                 DBConnection.counter += 1
                 self.id = DBConnection.counter

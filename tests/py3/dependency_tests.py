@@ -1,9 +1,6 @@
 import unittest
 
-from wiring.dependency import (
-    UnrealizedInjection,
-    get_dependencies,
-)
+from wiring.dependency import UnrealizedInjection, get_dependencies
 
 
 class GetDependenciesTest(unittest.TestCase):

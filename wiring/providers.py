@@ -1,5 +1,5 @@
-import functools
 import copy
+import functools
 
 from wiring import interface
 from wiring.dependency import get_dependencies

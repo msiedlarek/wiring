@@ -1,12 +1,9 @@
-import unittest
 import inspect
+import unittest
 
 import six
 
-from wiring.interface import (
-    MethodValidationError,
-    Method,
-)
+from wiring.interface import Method, MethodValidationError
 
 
 class MethodTest(unittest.TestCase):

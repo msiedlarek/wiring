@@ -1,6 +1,7 @@
 import jinja2
-from wiring import inject
+
 from werkzeug.wrappers import Response
+from wiring import inject
 
 
 class TemplateRenderer(object):

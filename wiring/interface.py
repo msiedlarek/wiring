@@ -1,5 +1,5 @@
-import inspect
 import collections
+import inspect
 import operator
 
 import six

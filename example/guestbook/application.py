@@ -1,20 +1,19 @@
 import threading
 
-from werkzeug.wrappers import Request
-from werkzeug.routing import Map, MapAdapter
-from werkzeug.exceptions import HTTPException
-from wiring import (
-    Graph,
-    Module,
-    provides,
-    scope,
-    inject,
-    Factory,
-    implements,
-    IScope,
-)
-
 from guestbook.response import LazyResponse
+from werkzeug.exceptions import HTTPException
+from werkzeug.routing import Map, MapAdapter
+from werkzeug.wrappers import Request
+from wiring import (
+    Factory,
+    Graph,
+    IScope,
+    Module,
+    implements,
+    inject,
+    provides,
+    scope
+)
 
 
 class Application(object):

@@ -1,10 +1,9 @@
 import logging.config
 
+from guestbook.application import RequestScope
+from guestbook.module import GuestbookModule
 from werkzeug.serving import run_simple
 from wiring import Graph
-
-from guestbook.module import GuestbookModule
-from guestbook.application import RequestScope
 
 
 def get_application():

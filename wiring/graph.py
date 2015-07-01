@@ -7,13 +7,9 @@ from wiring.dependency import Factory
 from wiring.providers import (
     FactoryProvider,
     FunctionProvider,
-    InstanceProvider,
+    InstanceProvider
 )
-from wiring.scopes import (
-    SingletonScope,
-    ProcessScope,
-    ThreadScope,
-)
+from wiring.scopes import ProcessScope, SingletonScope, ThreadScope
 
 
 __all__ = (

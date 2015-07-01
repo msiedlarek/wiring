@@ -1,13 +1,8 @@
-import unittest
-import threading
 import multiprocessing
+import threading
+import unittest
 
-from wiring.scopes import (
-    IScope,
-    SingletonScope,
-    ProcessScope,
-    ThreadScope,
-)
+from wiring.scopes import IScope, ProcessScope, SingletonScope, ThreadScope
 
 from . import ModuleTest
 

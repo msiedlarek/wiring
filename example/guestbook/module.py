@@ -1,12 +1,12 @@
-import pkg_resources
 import jinja2
-from wiring import Module, provides, scope, inject, SingletonScope
-from werkzeug.wsgi import SharedDataMiddleware
-from werkzeug.routing import Map, Rule
+import pkg_resources
 
+from guestbook import views
 from guestbook.application import Application, ApplicationModule
 from guestbook.response import TemplateRenderer
-from guestbook import views
+from werkzeug.routing import Map, Rule
+from werkzeug.wsgi import SharedDataMiddleware
+from wiring import Module, SingletonScope, inject, provides, scope
 
 
 class GuestbookModule(Module):

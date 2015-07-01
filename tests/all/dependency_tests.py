@@ -7,7 +7,7 @@ from wiring.dependency import (
     UnrealizedInjection,
     get_dependencies,
     inject,
-    injected,
+    injected
 )
 
 from . import ModuleTest

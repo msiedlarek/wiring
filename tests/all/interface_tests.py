@@ -1,19 +1,19 @@
-import unittest
 import inspect
+import unittest
 
 import six
 
 from wiring.interface import (
-    InterfaceComplianceError,
-    MissingAttributeError,
-    MethodValidationError,
     Attribute,
-    Method,
     Interface,
+    InterfaceComplianceError,
+    Method,
+    MethodValidationError,
+    MissingAttributeError,
+    get_implemented_interfaces,
     implements,
     implements_only,
-    isimplementation,
-    get_implemented_interfaces,
+    isimplementation
 )
 
 from . import ModuleTest

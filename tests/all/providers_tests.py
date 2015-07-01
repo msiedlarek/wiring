@@ -1,14 +1,11 @@
 import unittest
 
+from wiring.dependency import inject, injected
 from wiring.providers import (
-    IProvider,
     FactoryProvider,
     FunctionProvider,
     InstanceProvider,
-)
-from wiring.dependency import (
-    inject,
-    injected,
+    IProvider
 )
 
 from . import ModuleTest
@@ -21,7 +18,8 @@ class ProvidersModuleTest(ModuleTest):
 class FactoryProviderTest(unittest.TestCase):
 
     def test_basic(self):
-        factory = lambda: 42
+        def factory():
+            return 42
         provider = FactoryProvider(factory)
         IProvider.check_compliance(provider)
         self.assertDictEqual(provider.dependencies, {})

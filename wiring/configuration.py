@@ -1,12 +1,12 @@
-import inspect
 import collections
+import inspect
 
 import six
 
 from wiring.providers import (
     FactoryProvider,
     FunctionProvider,
-    InstanceProvider,
+    InstanceProvider
 )
 
 

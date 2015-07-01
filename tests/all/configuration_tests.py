@@ -1,18 +1,18 @@
 import unittest
 
-from wiring.providers import (
-    FactoryProvider,
-    FunctionProvider,
-    InstanceProvider,
-)
-from wiring.scopes import ProcessScope
-from wiring.graph import Graph
 from wiring.configuration import (
     InvalidConfigurationError,
     Module,
     provides,
-    scope,
+    scope
 )
+from wiring.graph import Graph
+from wiring.providers import (
+    FactoryProvider,
+    FunctionProvider,
+    InstanceProvider
+)
+from wiring.scopes import ProcessScope
 
 from . import ModuleTest
 
