@@ -1,6 +1,5 @@
 import threading
 
-from guestbook.response import LazyResponse
 from werkzeug.exceptions import HTTPException
 from werkzeug.routing import Map, MapAdapter
 from werkzeug.wrappers import Request
@@ -14,6 +13,8 @@ from wiring import (
     provides,
     scope
 )
+
+from guestbook.response import LazyResponse
 
 
 class Application(object):

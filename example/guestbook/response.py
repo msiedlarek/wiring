@@ -1,5 +1,4 @@
 import jinja2
-
 from werkzeug.wrappers import Response
 from wiring import inject
 
