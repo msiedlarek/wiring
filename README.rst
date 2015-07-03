@@ -75,7 +75,7 @@ Support
 =======
 
 Support is provided on a best-effort basis, through `Stack Overflow
-<https://stackoverflow.com>`_. Please tag your question `wiring`.
+<https://stackoverflow.com>`_. Please tag your question *wiring*.
 
 For commercial support, please contact me directly at mikolaj@siedlarek.pl.
 
