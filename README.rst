@@ -71,6 +71,14 @@ Documentation
 Full documentation is available at `wiring.readthedocs.org
 <http://wiring.readthedocs.org>`_.
 
+Support
+=======
+
+Support is provided on a best-effort basis, through `Stack Overflow
+<https://stackoverflow.com>`_. Please tag your question `wiring`.
+
+For commercial support, please contact me directly at mikolaj@siedlarek.pl.
+
 Development
 ===========
 

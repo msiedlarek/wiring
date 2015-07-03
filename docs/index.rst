@@ -38,6 +38,9 @@ PyPy and PyPy 3.
 
 Source code and issue tracker are `available at GitHub`_.
 
+Support is provided on a best-effort basis, through `Stack Overflow
+<https://stackoverflow.com>`_. Please tag your question `wiring`.
+
 This documentation is for Wiring version |release|. Wiring's versioning scheme
 fully complies with `Semantic Versioning 2.0`_ specification.
 
@@ -85,6 +88,13 @@ Quick Peek
 
    user_manager = graph.get(IUserManager)
    user = user_manager.get(12)
+
+Support
+-------
+
+If you have a question about Wiring please `post it on Stack Overflow
+<https://stackoverflow.com/questions/ask>`_ tagging it `wiring`. I'll try my
+best to help you whenever I find time.
 
 Contents
 --------
