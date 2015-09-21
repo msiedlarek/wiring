@@ -34,7 +34,7 @@ featuring:
 * small, extremely pedantic codebase
 
 Wiring is supported and tested on Python 2.7, Python 3.3, Python 3.4,
-PyPy and PyPy 3.
+Python 3.5, PyPy and PyPy 3.
 
 Source code and issue tracker are `available at GitHub`_.
 
