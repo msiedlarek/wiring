@@ -13,7 +13,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as readme:
 
 setup(
     name='wiring',
-    version='0.2.4',
+    version='0.3.0',
     description='Architectural foundation for Python applications.',
     long_description=long_description,
     url='https://github.com/msiedlarek/wiring',
@@ -28,7 +28,6 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Topic :: Software Development :: Libraries :: Application Frameworks',

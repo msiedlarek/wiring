@@ -20,8 +20,8 @@ featuring:
 * modular component configuration
 * small, extremely pedantic codebase
 
-Wiring is supported and tested on Python 2.7, Python 3.3, Python 3.4,
-Python 3.5, PyPy and PyPy 3.
+Wiring is supported and tested on Python 2.7, Python 3.4, Python 3.5, PyPy and
+PyPy 3.
 
 Quick Peek
 ==========
@@ -115,11 +115,11 @@ To generate html documentation::
 
 To release::
 
-   git tag -s -u gpgkey@example.com v0.2.4
+   git tag -s -u gpgkey@example.com v0.3.0
    python setup.py register
    python setup.py sdist upload -s -i gpgkey@example.com
    python setup.py bdist_wheel upload -s -i gpgkey@example.com
-   git push origin v0.2.4
+   git push origin v0.3.0
 
 License
 =======
