@@ -92,7 +92,7 @@ a function.
 :py:func:`@inject <wiring.dependency.inject>` decorator
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This is the simplest and recommended method.
+This is the simplest and recommended method for Python 2.
 
 .. code-block:: python
 
@@ -102,6 +102,19 @@ This is the simplest and recommended method.
       @inject('db.url', read_only='db.read_only')
       def __init__(self, url, read_only=None):
 	 self.url = url
+
+Python 3 `function annotations`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This is the simplest and recommended method for Python 3.
+
+.. code-block:: python
+
+   class Database:
+      def __init__(self, url: 'db.url', read_only: 'db.read_only' = None):
+	 self.url = url
+
+.. _function annotations: https://docs.python.org/3/tutorial/controlflow.html#function-annotations
 
 :py:attr:`injected <wiring.dependency.injected>` object
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

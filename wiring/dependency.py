@@ -177,9 +177,9 @@ class UnrealizedInjection(tuple):
 def get_dependencies(factory):
     """
     This function inspects a function to find its arguments marked for
-    injection, either with :py:func:`inject()` decorator or
-    :py:class:`UnrealizedInjection` class.  If `factory` is a class, then its
-    constructor is inspected.
+    injection, either with :py:func:`inject()` decorator,
+    :py:class:`UnrealizedInjection` class of through Python 3 function
+    annotations.  If `factory` is a class, then its constructor is inspected.
 
     Returned dictionary is a mapping of::
 
@@ -237,6 +237,27 @@ def get_dependencies(factory):
             process_dependency_tuples(
                 six.iteritems(argument_specification.kwonlydefaults)
             )
+        if argument_specification.annotations:
+            argument_names = {}
+            positional_arguments_count = (
+                len(argument_specification.args) -
+                len(argument_specification.defaults)
+            )
+            positional_arguments = (
+                argument_specification.args[:positional_arguments_count]
+            )
+            for number, argument in enumerate(positional_arguments):
+                argument_names[argument] = number
+            keyword_arguments = (
+                argument_specification.args[positional_arguments_count:]
+            )
+            for argument in keyword_arguments:
+                argument_names[argument] = argument
+            for argument in argument_specification.kwonlyargs:
+                argument_names[argument] = argument
+            for argument, annotation in (
+                    argument_specification.annotations.items()):
+                dependencies[argument_names[argument]] = annotation
     else:
         argument_specification = inspect.getargspec(function)
     if argument_specification.defaults:
