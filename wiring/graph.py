@@ -1,5 +1,4 @@
 import copy
-import operator
 
 import six
 
@@ -204,7 +203,9 @@ class Graph(object):
         for argument, value in six.iteritems(realized_dependencies):
             if isinstance(argument, six.integer_types):
                 # Integer keys are for positional arguments.
-                args.append((argument, value))
+                if len(args) <= argument:
+                    args.extend([None] * (argument + 1 - len(args)))
+                args[argument] = value
             elif isinstance(argument, six.string_types):
                 # String keys are for keyword arguments.
                 kwargs[argument] = value
@@ -213,10 +214,6 @@ class Graph(object):
                     "{} is not a valid argument key".format(repr(argument))
                 )
 
-        args = map(
-            operator.itemgetter(1),
-            sorted(args, key=operator.itemgetter(0))
-        )
         instance = provider(*args, **kwargs)
 
         if scope is not None:

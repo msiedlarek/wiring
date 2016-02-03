@@ -54,6 +54,39 @@ class GraphTest(unittest.TestCase):
         self.assertIsInstance(test_instance, TestClass)
         self.assertTrue(test_instance.is_ok)
 
+    def test_some_positional_arguments(self):
+        @inject(None, 'foo')
+        def function(first, second):
+            return first, second
+        graph = Graph()
+        graph.register_instance('foo', 'bar')
+        graph.register_function('function', function)
+        graph.validate()
+
+        function_instance = graph.get('function')
+        first, second = function_instance(123)
+        self.assertEqual(first, 123)
+        self.assertEqual(second, 'bar')
+
+    def test_some_positional_arguments_class(self):
+        class TestClass(object):
+            @inject(None, 'foo')
+            def __init__(self, first, second):
+                self.first = first
+                self.second = second
+
+            def test(self):
+                return self.first, self.second
+        graph = Graph()
+        graph.register_instance('foo', 'bar')
+        graph.register_factory(TestClass, TestClass)
+        graph.validate()
+
+        test_class = graph.get(TestClass, 123)
+        first, second = test_class.test()
+        self.assertEqual(first, 123)
+        self.assertEqual(second, 'bar')
+
     def test_factory(self):
         class DBConnection(object):
             counter = 0

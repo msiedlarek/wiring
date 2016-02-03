@@ -6,6 +6,7 @@ from wiring.configuration import (
     provides,
     scope
 )
+from wiring.dependency import inject
 from wiring.graph import Graph
 from wiring.providers import (
     FactoryProvider,
@@ -148,3 +149,21 @@ class ModuleTest(unittest.TestCase):
         self.assertIn("Wrong number", cm.exception.message)
         self.assertIn("foo", cm.exception.message)
         self.assertIn(cm.exception.message, str(cm.exception))
+
+    def test_provides_positional_arguments(self):
+        class SomeModule(Module):
+            instances = {
+                'buzz': 12,
+            }
+
+            @provides('fizzbuzz')
+            @inject('buzz')
+            def provide_fizzbuzz(self, buzz):
+                return 13, buzz
+
+        graph = Graph()
+        SomeModule().add_to(graph)
+
+        fizz, buzz = graph.get('fizzbuzz')
+        self.assertEqual(fizz, 13)
+        self.assertEqual(buzz, 12)

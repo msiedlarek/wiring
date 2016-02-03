@@ -26,7 +26,7 @@ class GetDependenciesTest(unittest.TestCase):
         self.assertDictEqual(
             get_dependencies(function),
             {
-                1: 33,
+                'bar': 33,
                 'somearg': 15,
                 'other': 'foo',
             }
@@ -40,10 +40,31 @@ class GetDependenciesTest(unittest.TestCase):
         self.assertDictEqual(
             get_dependencies(function),
             {
-                1: 33,
+                'bar': 33,
                 'somearg': 15,
                 'other_arg': 5,
                 'other': 'foo',
                 'test': 2,
+            }
+        )
+
+    def test_annotations_positional(self):
+        def function(foo, bar: 33):
+            pass
+        self.assertDictEqual(
+            get_dependencies(function),
+            {
+                'bar': 33,
+            }
+        )
+
+    def test_annotations_positional_class(self):
+        class SomeClass:
+            def __init__(self, foo, bar: 33):
+                pass
+        self.assertDictEqual(
+            get_dependencies(SomeClass),
+            {
+                'bar': 33,
             }
         )

@@ -238,26 +238,7 @@ def get_dependencies(factory):
                 six.iteritems(argument_specification.kwonlydefaults)
             )
         if argument_specification.annotations:
-            argument_names = {}
-            positional_arguments_count = (
-                len(argument_specification.args) -
-                len(argument_specification.defaults)
-            )
-            positional_arguments = (
-                argument_specification.args[:positional_arguments_count]
-            )
-            for number, argument in enumerate(positional_arguments):
-                argument_names[argument] = number
-            keyword_arguments = (
-                argument_specification.args[positional_arguments_count:]
-            )
-            for argument in keyword_arguments:
-                argument_names[argument] = argument
-            for argument in argument_specification.kwonlyargs:
-                argument_names[argument] = argument
-            for argument, annotation in (
-                    argument_specification.annotations.items()):
-                dependencies[argument_names[argument]] = annotation
+            dependencies.update(argument_specification.annotations)
     else:
         argument_specification = inspect.getargspec(function)
     if argument_specification.defaults:

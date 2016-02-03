@@ -100,6 +100,22 @@ class UnrealizedInjectionTest(unittest.TestCase):
 
 class GetDependenciesTest(unittest.TestCase):
 
+    def test_none(self):
+        def function():
+            pass
+        self.assertDictEqual(
+            get_dependencies(function),
+            {}
+        )
+
+    def test_empty(self):
+        def function(foo):
+            pass
+        self.assertDictEqual(
+            get_dependencies(function),
+            {}
+        )
+
     def test_preprocessed(self):
         def function(foo):
             pass

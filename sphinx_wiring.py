@@ -5,6 +5,7 @@ from sphinx.ext import autodoc
 from sphinx.locale import _
 from sphinx.util import force_decode
 from sphinx.util.docstrings import prepare_docstring
+
 from wiring.interface import Interface, Method, get_implemented_interfaces
 
 
