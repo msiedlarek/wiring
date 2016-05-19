@@ -115,11 +115,11 @@ To generate html documentation::
 
 To release::
 
-   git tag -s -u gpgkey@example.com v0.3.0
+   git tag -s -u gpgkey@example.com v0.4.0
    python setup.py register
    python setup.py sdist upload -s -i gpgkey@example.com
    python setup.py bdist_wheel upload -s -i gpgkey@example.com
-   git push origin v0.3.0
+   git push origin v0.4.0
 
 License
 =======

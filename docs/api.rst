@@ -11,3 +11,5 @@ API Documentation
    api/interface
    api/providers
    api/scopes
+   api/scanning/register
+   api/scanning/scan

@@ -13,7 +13,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as readme:
 
 setup(
     name='wiring',
-    version='0.3.0',
+    version='0.4.0',
     description='Architectural foundation for Python applications.',
     long_description=long_description,
     url='https://github.com/msiedlarek/wiring',
@@ -36,6 +36,9 @@ setup(
     install_requires=[
         'six',
     ],
+    extras_require={
+        'scanning': ['venusian'],
+    },
     tests_require=[
         'nose',
     ],

@@ -339,6 +339,18 @@ class GraphTest(unittest.TestCase):
         self.assertEqual(cm.exception.scope_type, FooBarScope)
         self.assertIn('FooBarScope', str(cm.exception))
 
+    def test_late_unknown_scope(self):
+        class FooBarScope(object):
+            pass
+
+        graph = Graph()
+        graph.register_factory('foo', lambda: None)
+        graph.providers['foo'].scope = FooBarScope
+        with self.assertRaises(UnknownScopeError) as cm:
+            graph.get('foo')
+        self.assertEqual(cm.exception.scope_type, FooBarScope)
+        self.assertIn('FooBarScope', str(cm.exception))
+
     def test_unregister_provider(self):
         graph = Graph()
         graph.register_instance('foo', 'bar')

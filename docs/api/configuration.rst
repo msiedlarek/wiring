@@ -10,6 +10,10 @@ Module
 
    .. autoattribute:: providers
       :annotation:
+   .. autoattribute:: scan
+      :annotation:
+   .. autoattribute:: scan_ignore
+      :annotation:
    .. automethod:: add_to
 
 @provides

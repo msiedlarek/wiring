@@ -211,6 +211,25 @@ class Module(object):
     :py:interface:`wiring.providers.IProvider` interface.
     """
 
+    scan = []
+    """
+    A sequence of module references to recursively scan for providers
+    registered with :py:mod:`wiring.scanning.register` module.
+    If a string is given instead of a module reference, it will be used to
+    import the module.
+    """
+
+    scan_ignore = []
+    """
+    A sequence of module paths to ignore when scanning modules in
+    :py:attr:`scan`.
+    """
+
+    def __init__(self):
+        if self.scan:
+            from wiring.scanning import scan_to_module
+            scan_to_module(self.scan, self, ignore=self.scan_ignore)
+
     def add_to(self, graph):
         """
         Register all of declared providers into a given :term:`object graph`.
