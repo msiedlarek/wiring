@@ -7,10 +7,15 @@ script:
 after_success:
   - coveralls
 env:
-  - TOXENV=py27
-  - TOXENV=py34
-  - TOXENV=py35
-  - TOXENV=pypy
-  - TOXENV=pypy3
+  - TOXENV=py27-scanning
+  - TOXENV=py27-noscanning
+  - TOXENV=py34-scanning
+  - TOXENV=py34-noscanning
+  - TOXENV=py35-scanning
+  - TOXENV=py35-noscanning
+  - TOXENV=pypy-scanning
+  - TOXENV=pypy-noscanning
+  - TOXENV=pypy3-scanning
+  - TOXENV=pypy3-noscanning
   - TOXENV=flake8
   - TOXENV=docs
