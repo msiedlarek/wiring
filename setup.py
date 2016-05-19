@@ -45,10 +45,8 @@ setup(
     test_suite='nose.collector',
     packages=[
         'wiring',
+        'wiring.scanning',
     ],
-    package_dir={
-        'wiring': 'wiring',
-    },
     package_data={
         '': ['LICENSE'],
     },
