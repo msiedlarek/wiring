@@ -5,6 +5,7 @@ API Documentation
    :maxdepth: 2
 
    api/wiring
+   api/categories
    api/configuration
    api/dependency
    api/graph

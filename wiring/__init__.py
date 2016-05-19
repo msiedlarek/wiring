@@ -5,6 +5,7 @@ import anything without actually remembering where it was declared::
     from wiring import injected
 """
 
+from wiring.categories import *  # noqa
 from wiring.configuration import *  # noqa
 from wiring.dependency import *  # noqa
 from wiring.graph import *  # noqa
