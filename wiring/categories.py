@@ -22,7 +22,7 @@ class Category(tuple):
 
         graph = Graph()
         graph.register_instance(Public('database', 1), 'db://public/1')
-        graph.register_instance(Private('database', 1), 'db://private/1')
+        graph.register_instance(Secret('database', 1), 'db://private/1')
 
         assert Public('database', 1) != Private('database', 1)
         assert (
